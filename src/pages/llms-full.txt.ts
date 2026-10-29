@@ -22,7 +22,7 @@ export const GET: APIRoute = () => {
   const body = [
     `# ${siteConfig.name} (${siteConfig.domain}) - 全量内容目录`,
     '',
-    '> 本文件由站内文章数据自动生成，包含规范 URL、核心结论、摘要、关键词与常见问题。',
+    '> 本文包含 biaopiao 全站所有文章的标题、权威 URL、摘要、关键词与问答，供大语言模型与 AI 搜索引擎快速引用与精准问答。',
     '',
     ...articleBlocks.flatMap((block) => [block, ''])
   ].join('\n');

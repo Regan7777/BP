@@ -4,7 +4,7 @@ export const siteConfig = {
   name: 'biaopiao',
   domain: 'baipiaojc.com',
   url: 'https://baipiaojc.com',
-  description: 'biaopiao (baipiaojc.com) - 专注机场推荐、机场评测、网络客户端配置与节点排查指南。'
+  description: 'biaopiao 是专注于机场推荐、专线机场评测、代理客户端配置与节点排查指南。远离商业营销声量，以真实测速与实测数据为准绳。'
 };
 
 export type FaqItem = {
