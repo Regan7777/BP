@@ -2,8 +2,8 @@ const fs = require('node:fs/promises');
 const path = require('node:path');
 
 const host = 'baipiaojc.com';
-const key = '7ac2f8d5e10b4c36a9147fb823d6e501';
-const keyLocation = `https://${host}/baipiao-indexnow-key.txt`;
+const key = '7ec54bed5e684bee9e50ea059b0e5538';
+const keyLocation = `https://${host}/7ec54bed5e684bee9e50ea059b0e5538.txt`;
 
 async function main() {
   const sitemapPath = path.join(process.cwd(), 'dist', 'sitemap.xml');
