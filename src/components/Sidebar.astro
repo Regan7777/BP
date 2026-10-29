@@ -1,0 +1,11 @@
+---
+const popular = ['从需求出发选择服务', '订阅与节点的基础概念', '客户端导入操作说明', '常见连接异常排查'];
+---
+
+<aside class="sidebar">
+  <section class="sidebar-card">
+    <p class="label">连接指南</p><h2>用可理解的信息，帮助你完成选择与配置。</h2><p>推荐、评测、教程和排查内容，都以中文整理。</p>
+  </section>
+  <section class="side-section"><div class="side-title"><span>热门阅读</span><a href="/">全部</a></div><ol class="ranking-list">{popular.map((item, index) => <li><b>0{index + 1}</b><a href="/">{item}</a></li>)}</ol></section>
+  <section class="side-section"><div class="side-title"><span>关注我们</span></div><div class="social-links"><a href="/">RSS</a><a href="/">邮件</a><a href="/">即将更新</a></div></section>
+</aside>

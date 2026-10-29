@@ -1,0 +1,134 @@
+---
+interface Props {
+  title: string;
+  href: string;
+  affiliateHref?: string;
+  col1Label?: string;
+  col1Value?: string;
+  col2Label?: string;
+  col2Value?: string;
+  col3Label?: string;
+  col3Value?: string;
+  isActive?: boolean;
+}
+
+const {
+  title,
+  href,
+  affiliateHref,
+  col1Label = '价格',
+  col1Value = '—',
+  col2Label = '地区',
+  col2Value = '—',
+  col3Label = '更新',
+  col3Value = '—',
+  isActive = false,
+} = Astro.props;
+
+const formattedTitle = title.replace('\n', '<br />');
+---
+
+<div class:list={['curated-item-row', { 'has-active-indicator': isActive }]}>
+  <div class="curated-title-col">
+    <a href={href} class="curated-title-link">
+      <h3 class="curated-item-title" set:html={formattedTitle} />
+    </a>
+  </div>
+
+  <div class="curated-meta-group">
+    <div class="curated-meta-col">
+      <span class="meta-label">{col1Label}</span>
+      <span class="meta-value">{col1Value}</span>
+    </div>
+    <div class="curated-meta-col">
+      <span class="meta-label">{col2Label}</span>
+      <span class="meta-value">{col2Value}</span>
+    </div>
+    <div class="curated-meta-col">
+      <span class="meta-label">{col3Label}</span>
+      <span class="meta-value">{col3Value}</span>
+    </div>
+  </div>
+
+  {affiliateHref && (
+    <div class="curated-action-group">
+      <a
+        href={affiliateHref}
+        target="_blank"
+        rel="sponsored noopener noreferrer"
+        class="curated-external-cta"
+        aria-label={`前往${title}官网入口，新标签页打开`}
+      >
+        官网入口
+      </a>
+      <a href={href} class="curated-review-cta" aria-label={`阅读${title}评测`}>
+        评测入口
+      </a>
+    </div>
+  )}
+</div>
+
+<script>
+  function setupCuratedIndicator() {
+    const containers = document.querySelectorAll<HTMLElement>('.curated-table-container');
+    containers.forEach((container) => {
+      if (container.dataset.indicatorInit === 'true') return;
+      container.dataset.indicatorInit = 'true';
+
+      const indicator = document.createElement('div');
+      indicator.className = 'curated-sliding-indicator';
+      indicator.setAttribute('aria-hidden', 'true');
+      container.prepend(indicator);
+
+      const rows = container.querySelectorAll<HTMLElement>('.curated-item-row');
+      if (rows.length === 0) return;
+
+      let activeRow = container.querySelector<HTMLElement>('.curated-item-row.has-active-indicator') || rows[0];
+
+      function updateIndicator(row: HTMLElement | null, animate = true) {
+        if (!row) return;
+        const containerRect = container.getBoundingClientRect();
+        const rowRect = row.getBoundingClientRect();
+        const top = rowRect.top - containerRect.top;
+        const height = rowRect.height;
+
+        if (!animate) {
+          indicator.style.transition = 'none';
+        } else {
+          indicator.style.transition = 'transform 0.28s cubic-bezier(0.4, 0, 0.2, 1), height 0.28s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease';
+        }
+
+        indicator.style.height = `${height}px`;
+        indicator.style.transform = `translateY(${top}px)`;
+        indicator.style.opacity = '1';
+      }
+
+      // Initial position
+      setTimeout(() => updateIndicator(activeRow, false), 50);
+
+      rows.forEach((row) => {
+        row.addEventListener('mouseenter', () => {
+          updateIndicator(row, true);
+        });
+      });
+
+      container.addEventListener('mouseleave', () => {
+        if (activeRow) {
+          updateIndicator(activeRow, true);
+        }
+      });
+
+      window.addEventListener('resize', () => {
+        if (activeRow) {
+          updateIndicator(activeRow, false);
+        }
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupCuratedIndicator);
+  } else {
+    setupCuratedIndicator();
+  }
+</script>

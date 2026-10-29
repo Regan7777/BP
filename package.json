@@ -1,0 +1,21 @@
+{
+  "name": "zhongwen-blog",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "preview:static": "node scripts/serve-dist.cjs",
+    "audit": "node scripts/audit-site.cjs",
+    "audit:external": "node scripts/check-external-links.cjs",
+    "optimize:images": "node scripts/optimize-site-images.cjs && node scripts/optimize-airport-images.cjs",
+    "indexnow": "node scripts/submit-indexnow.cjs"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.4",
+    "astro": "7.3.3",
+    "typescript": "^5.9.2"
+  }
+}

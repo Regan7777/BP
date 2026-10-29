@@ -1,0 +1,63 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import CuratedListItem from '../components/CuratedListItem.astro';
+import { articles } from '../data/site';
+
+// Deduplicate articles by slug
+const uniqueArticles = Array.from(
+  new Map(articles.map((item) => [item.slug, item])).values()
+);
+
+const countFormatted = String(uniqueArticles.length).padStart(2, '0');
+---
+
+<BaseLayout title="全站文章归档｜biaopiao" description="biaopiao (baipiaojc.com) 全站所有机场推荐、深度评测、客户端配置与实用工具文章完整索引。">
+  <Header />
+
+  <main class="curated-page-shell">
+    <!-- Header Title Section (1:1 with reference photo) -->
+    <header class="curated-hero">
+      <span class="curated-badge-label">CURATED ARCHIVE / {countFormatted}</span>
+      <div class="curated-title-row">
+        <h1 class="curated-main-title">文章归档</h1>
+        <div class="curated-title-divider" aria-hidden="true"></div>
+        <p class="curated-tagline">收录全站所有技术指南、机场评测与网络工具档案。</p>
+      </div>
+    </header>
+
+    <!-- Curated Table List Frame -->
+    <div class="curated-table-container">
+      {uniqueArticles.map((article, index) => {
+        const isFirst = index === 0;
+
+        const col1Label = '专栏分类';
+        const col1Value = article.category;
+
+        const col2Label = article.price ? '价格 / 范围' : '平台 / 模式';
+        const col2Value = article.price || article.platform || article.region || '精选专栏';
+
+        const col3Label = '更新日期';
+        const col3Value = article.updatedDate || article.date;
+
+        return (
+          <CuratedListItem
+            title={article.title}
+            href={`/posts/${article.slug}`}
+            col1Label={col1Label}
+            col1Value={col1Value}
+            col2Label={col2Label}
+            col2Value={col2Value}
+            col3Label={col3Label}
+            col3Value={col3Value}
+            isActive={isFirst}
+          />
+        );
+      })}
+    </div>
+  </main>
+
+  <!-- Global Dark Footer with Disclaimer -->
+  <Footer />
+</BaseLayout>

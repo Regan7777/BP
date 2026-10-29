@@ -1,0 +1,16 @@
+---
+import type { Article } from '../data/site';
+
+interface Props { article: Article; compact?: boolean; number?: string; }
+const { article, compact = false, number } = Astro.props;
+---
+
+<article class:list={['post-card', { compact }]}>
+  <a class:list={['post-image', article.image]} href={`/posts/${article.slug}`} aria-label={`阅读：${article.title}`}></a>
+  <div class="post-copy">
+    <p class="post-meta">{article.category}<span></span>{article.date}<span></span>{article.readTime}</p>
+    <h2>{number && <b class="post-number">{number}</b>}<a href={`/posts/${article.slug}`}>{article.title}</a></h2>
+    {!compact && <p class="excerpt">{article.excerpt}</p>}
+    {!compact && <p class="byline">编辑部 · {article.readTime} 阅读</p>}
+  </div>
+</article>

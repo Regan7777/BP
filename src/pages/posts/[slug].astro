@@ -1,0 +1,727 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { articles, getArticle, ENABLE_INTERNAL_LINKS, filterInternalLinks, type ArticleSection } from '../../data/site';
+
+export function getStaticPaths() {
+  return articles.map((article) => ({ params: { slug: article.slug } }));
+}
+
+const article = getArticle(Astro.params.slug ?? '');
+if (!article) return Astro.redirect('/');
+
+const allArticles = articles.filter((item) => item.slug !== article.slug);
+const currentIndex = articles.findIndex((item) => item.slug === article.slug);
+const prevArticle = articles[(currentIndex - 1 + articles.length) % articles.length];
+const nextArticle = articles[(currentIndex + 1) % articles.length];
+
+// 动态获取最后更新时间：优先取文章配置的 updatedDate，无则采用当前日期
+const now = new Date();
+const todayDateStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+const lastUpdatedDate = article.updatedDate || todayDateStr;
+
+const rawFallbackSections: ArticleSection[] = [
+  {
+    id: 'section-1',
+    num: 1,
+    title: '确认使用需求与关键指标',
+    lead: '选购或部署前需清晰界定网络吞吐与抗干扰需求。',
+    paragraphs: [
+      '在数字化前沿与高并发网络环境中，选择一条兼具<span class="keyword-highlight">“旗舰级稳定性”</span>与低延迟的通道，往往比盲目堆砌带宽参数更有价值。',
+      filterInternalLinks('详细客户端设置请参考 <a href="/posts/sing-box-overview-and-setup">Sing-box 核心与配置指南</a>，遇到无法解析时查阅 <a href="/posts/dns-leak-test-and-diagnostics">DNS 与连接排查指南</a>。')
+    ]
+  },
+  {
+    id: 'section-2',
+    num: 2,
+    title: '专线与协议技术架构实测',
+    lead: '技术架构决定了晚高峰抗拥堵表现与抗封锁能力。',
+    paragraphs: [
+      filterInternalLinks('不同代理协议在延迟、拥塞控制与伪装方式上存在明显差异，选择时要结合客户端支持和实际链路。基础概念请见 <a href="/posts/vpn-proxy-glossary">代理协议与线路术语白话指南</a>。')
+    ]
+  }
+];
+
+const sections = article.sections && article.sections.length > 0 ? article.sections : rawFallbackSections;
+
+// 确定 3 篇强相关内链文章，实现网状互锁，无孤页
+const relatedSlugs = article.relatedSlugs || [];
+const matchedRelated = relatedSlugs
+  .map((s) => articles.find((a) => a.slug === s))
+  .filter((a): a is (typeof articles)[0] => Boolean(a));
+const fallbackRelated = allArticles.slice(0, 3);
+const finalRelated = matchedRelated.length >= 3 ? matchedRelated.slice(0, 3) : fallbackRelated;
+
+// 生成 Schema.org JSON-LD 结构化数据 (BlogPosting, BreadcrumbList, FAQPage)
+const siteUrl = 'https://baipiaojc.com';
+const articleCanonical = `${siteUrl}/posts/${article.slug}`;
+const localImage = article.image.startsWith('/') ? article.image : `/${article.image}`;
+const articleCoverUrl = article.image.startsWith('http')
+  ? article.image
+  : `${siteUrl}${localImage}`;
+const heroImageSrc = article.image.startsWith('http') ? article.image : localImage;
+const isOfficialBrandImage = article.image.includes('/images/airports/');
+
+const isoDatePublished = (article.date || '2026-10-27')
+  .replace(/\./g, '-')
+  .replace(/年|月/g, '-')
+  .replace(/日/g, '')
+  .trim();
+const isoDateModified = (lastUpdatedDate || isoDatePublished)
+  .replace(/\./g, '-')
+  .replace(/年|月/g, '-')
+  .replace(/日/g, '')
+  .trim();
+
+const schemaBlogPosting = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: article.title,
+  description: article.excerpt,
+  image: articleCoverUrl,
+  datePublished: isoDatePublished,
+  dateModified: isoDateModified,
+  author: {
+    '@type': 'Person',
+    name: 'LT-博主',
+    url: `${siteUrl}/about`
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'biaopiao',
+    url: siteUrl,
+    logo: {
+      '@type': 'ImageObject',
+      url: `${siteUrl}/logo.png`
+    }
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': articleCanonical
+  }
+};
+
+const schemaBreadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: '首页',
+      item: siteUrl
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: article.category,
+      item: `${siteUrl}/category/${article.categorySlug}`
+    },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name: article.title,
+      item: articleCanonical
+    }
+  ]
+};
+
+const schemaFaq = article.faq && article.faq.length > 0 ? {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: article.faq.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.answer.replace(/<[^>]*>?/gm, '')
+    }
+  }))
+} : null;
+
+const schemaJsonLd = schemaFaq ? [schemaBlogPosting, schemaBreadcrumb, schemaFaq] : [schemaBlogPosting, schemaBreadcrumb];
+---
+
+<BaseLayout
+  title={`${article.title}｜biaopiao`}
+  description={article.excerpt}
+  keywords={article.keywords}
+  canonicalUrl={articleCanonical}
+  image={articleCoverUrl}
+  type="article"
+  schemaJsonLd={schemaJsonLd}
+>
+  <!-- Reading Progress Glow Bar -->
+  <div class="reading-progress-track" aria-hidden="true">
+    <div class="reading-progress-glow" id="readingProgressBar"></div>
+  </div>
+
+  <div class="article-page-container">
+    <!-- Top Hero Section with Integrated Transparent Header -->
+    <header class="article-hero-header">
+      <Header showAd={false} transparent={true} />
+
+      <div class="article-hero-inner">
+        <!-- Left Hero Column -->
+        <div class="article-hero-left">
+          <!-- Semantic Breadcrumbs -->
+          <nav class="article-breadcrumbs" aria-label="面包屑导航">
+            <a href="/" class="breadcrumb-link">首页</a>
+            <span class="breadcrumb-sep">/</span>
+            <a href={`/category/${article.categorySlug}`} class="breadcrumb-link">{article.category}</a>
+            <span class="breadcrumb-sep">/</span>
+            <span class="breadcrumb-current">{article.title}</span>
+          </nav>
+
+          <!-- Category Pill -->
+          <a href={`/category/${article.categorySlug}`} class="article-cat-tag">
+            <span class="article-cat-dot" aria-hidden="true"></span>
+            <span>{article.category}</span>
+          </a>
+
+          <!-- Massive Title with Bright Green Left Border -->
+          <h1 class="article-hero-title">
+            {article.title}
+          </h1>
+
+          <!-- Author & Date Meta Row -->
+          <div class="article-meta-row">
+            <div class="article-author-avatar">
+              <img
+                src="/avatar-lt.webp"
+                alt="LT-博主"
+                width="50"
+                height="50"
+              />
+            </div>
+            <div class="article-meta-info">
+              <div class="article-meta-line1">
+                <span class="article-author-name">LT-博主</span>
+                <span>|</span>
+                <span>阅读时间: {article.readTime}</span>
+              </div>
+              <div class="article-meta-line2">
+                <span>最后更新时间: {lastUpdatedDate}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hero Social Share Buttons -->
+          <div class="article-hero-share">
+            <span class="hero-share-label">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+                <polyline points="16 6 12 2 8 6"/>
+                <line x1="12" y1="2" x2="12" y2="15"/>
+              </svg>
+              分享
+            </span>
+
+            <a href="https://t.me/wanfengzn7" target="_blank" rel="noopener noreferrer" class="hero-share-btn" aria-label="前往 Telegram">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m22 2-7 20-4-9-9-4Z" />
+                <path d="M22 2 11 13" />
+              </svg>
+            </a>
+
+            <a href="https://x.com/Reganuphc" target="_blank" rel="noopener noreferrer" class="hero-share-btn" aria-label="前往 X">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+            </a>
+
+            <button class="hero-share-btn" onclick="navigator.clipboard.writeText(window.location.href); alert('链接已复制到剪贴板！');" aria-label="复制链接">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Right Hero Column: Cover image + Lead paragraph callout -->
+        <div class="article-hero-right">
+          <img
+            src={heroImageSrc}
+            alt={article.title}
+            class:list={['article-hero-cover', { 'article-hero-cover--brand': isOfficialBrandImage }]}
+            width="1200"
+            height="1200"
+            loading="eager"
+            decoding="async"
+            fetchpriority="high"
+          />
+
+          <!-- Translucent Lead Callout Box -->
+          <div class="article-hero-lead-box">
+            <p>{article.excerpt}</p>
+            {article.affiliatePath && (
+              <a
+                href={article.affiliatePath}
+                target="_blank"
+                rel="sponsored noopener noreferrer"
+                class="article-hero-cta"
+                aria-label={`前往${article.title}的官网入口，新标签页打开`}
+              >
+                前往官网入口
+              </a>
+            )}
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- White Reading Canvas & Scrolling Interaction -->
+    <main class="article-reading-canvas">
+      <div class="article-reading-inner">
+        <!-- Left Sticky Floating Blogger & Share Sidebar -->
+        <aside class="sticky-share-sidebar" aria-label="博主与社交分享">
+          <a href="/about" class="sticky-blogger-card" title="博主: LT-博主 (点击查看主页)">
+            <div class="sticky-avatar-wrap">
+              <img
+                src="/avatar-lt.webp"
+                alt="LT-博主"
+                class="sticky-avatar-img"
+              />
+              <span class="sticky-avatar-status" title="在线"></span>
+            </div>
+            <div class="sticky-author-tag">LT-博主</div>
+          </a>
+
+          <div class="sticky-sidebar-divider" aria-hidden="true"></div>
+
+          <div class="sticky-share-label">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+              <polyline points="16 6 12 2 8 6"/>
+              <line x1="12" y1="2" x2="12" y2="15"/>
+            </svg>
+            <span>分享</span>
+          </div>
+
+          <a href="https://t.me/wanfengzn7" target="_blank" rel="noopener noreferrer" class="sticky-share-btn btn-telegram" aria-label="Telegram">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m22 2-7 20-4-9-9-4Z" />
+              <path d="M22 2 11 13" />
+            </svg>
+          </a>
+
+          <a href="https://x.com/Reganuphc" target="_blank" rel="noopener noreferrer" class="sticky-share-btn btn-x" aria-label="X">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+          </a>
+
+          <button class="sticky-share-btn btn-link" onclick="navigator.clipboard.writeText(window.location.href); alert('文章链接已成功复制！');" aria-label="复制链接">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+            </svg>
+          </button>
+        </aside>
+
+        <!-- Main Reading Body Column -->
+        <article class="article-main-body">
+          <!-- AI Direct Answer Snippet Box -->
+          {article.directAnswer && (
+            <div class="direct-answer-box">
+              <div class="direct-answer-header">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M12 16v-4" />
+                  <path d="M12 8h.01" />
+                </svg>
+                <span>核心结论直答 (Direct Answer)</span>
+              </div>
+              <p class="direct-answer-body">{article.directAnswer}</p>
+            </div>
+          )}
+
+          {article.evidenceStatus && (
+            <section class="evidence-status-card" aria-label="资料核验范围">
+              <div class="evidence-status-heading">
+                <span>资料核验范围</span>
+                <span>非性能实测</span>
+              </div>
+              <div class="evidence-status-grid">
+                <div>
+                  <span>测速数据</span>
+                  <p>{article.evidenceStatus.speed}</p>
+                </div>
+                <div>
+                  <span>IP 纯净度</span>
+                  <p>{article.evidenceStatus.ipPurity}</p>
+                </div>
+                <div>
+                  <span>已核对内容</span>
+                  <p>{article.evidenceStatus.scope}</p>
+                </div>
+              </div>
+            </section>
+          )}
+
+          <!-- Pros & Cons Decision Grid (结构化决策红黑榜) -->
+          {article.prosAndCons && (
+            <div class="article-pros-cons-grid">
+              <div class="pros-cons-card pros-card">
+                <div class="pros-cons-header">
+                  <span class="pros-cons-badge pros-badge">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                    <span>{article.prosAndCons.prosTitle || "实测核心优势 (Pros)"}</span>
+                  </span>
+                </div>
+                <ul class="pros-cons-list">
+                  {article.prosAndCons.pros.map((pro) => (
+                    <li>
+                      <svg class="pros-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                      <span set:html={pro} />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div class="pros-cons-card cons-card">
+                <div class="pros-cons-header">
+                  <span class="pros-cons-badge cons-badge">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                      <line x1="12" y1="9" x2="12" y2="13" />
+                      <line x1="12" y1="17" x2="12.01" y2="17" />
+                    </svg>
+                    <span>{article.prosAndCons.consTitle || "选购与避坑须知 (Cons)"}</span>
+                  </span>
+                </div>
+                <ul class="pros-cons-list">
+                  {article.prosAndCons.cons.map((con) => (
+                    <li>
+                      <svg class="cons-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="15" y1="9" x2="9" y2="15" />
+                        <line x1="9" y1="9" x2="15" y2="15" />
+                      </svg>
+                      <span set:html={con} />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          )}
+
+          <!-- 2-Column Collapsible Table of Contents -->
+          <nav class="article-toc-box" id="articleToc">
+            <div class="toc-header" onclick="document.getElementById('articleToc').classList.toggle('collapsed')">
+              <div class="toc-header-left">
+                <svg class="toc-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="8" y1="6" x2="21" y2="6"/>
+                  <line x1="8" y1="12" x2="21" y2="12"/>
+                  <line x1="8" y1="18" x2="21" y2="18"/>
+                  <line x1="3" y1="6" x2="3.01" y2="6"/>
+                  <line x1="3" y1="12" x2="3.01" y2="12"/>
+                  <line x1="3" y1="18" x2="3.01" y2="18"/>
+                </svg>
+                <span class="toc-header-title">内容目录导航</span>
+              </div>
+              <svg class="toc-toggle-chevron" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="18 15 12 9 6 15"/>
+              </svg>
+            </div>
+
+            <div class="toc-list-grid">
+              {sections.map((item, idx) => (
+                <a href={`#${item.id || `section-${idx + 1}`}`} class="toc-item-link">
+                  <span class="toc-num-badge">{item.num || idx + 1}</span>
+                  <span class="toc-item-text">{item.title}</span>
+                </a>
+              ))}
+              {article.faq && article.faq.length > 0 && (
+                <a href="#faq-section" class="toc-item-link">
+                  <span class="toc-num-badge">FAQ</span>
+                  <span class="toc-item-text">常见问题与排错方案</span>
+                </a>
+              )}
+            </div>
+          </nav>
+
+          <!-- Article Content Sections -->
+          {sections.map((section, idx) => (
+            <section id={section.id || `section-${idx + 1}`}>
+              <h2 class="article-section-title">
+                <span class="step-badge">{section.num || idx + 1}</span>
+                {section.title}
+              </h2>
+
+              {section.lead && (
+                <p style="font-size: 16.5px; font-weight: 600; color: #1f2937; margin-bottom: 14px;">
+                  {section.lead}
+                </p>
+              )}
+
+              {section.paragraphs && section.paragraphs.map((pText) => (
+                pText.startsWith('<figure') || pText.startsWith('<div') ? (
+                  <div set:html={pText} />
+                ) : (
+                  <p set:html={pText} />
+                )
+              ))}
+
+              {section.table && (
+                <div class="article-table-wrap">
+                  <table class="article-markdown-table">
+                    <thead>
+                      <tr>
+                        {section.table.headers.map((th) => (
+                          <th>{th}</th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {section.table.rows.map((row) => (
+                        <tr>
+                          {row.map((cell) => (
+                            <td>{cell}</td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </section>
+          ))}
+
+          <!-- Sincere Pitfall Warning Callout Box (极度真诚避坑卡片) -->
+          {article.pitfallCallout && (
+            <div class="pitfall-callout-card" role="alert" aria-label="避坑忠告">
+              <div class="callout-header">
+                <div class="callout-badge-wrap">
+                  <span class="callout-flame-icon">🔥</span>
+                  <span class="callout-badge">{article.pitfallCallout.badge || "避坑指南 / CAVEAT EMPTOR"}</span>
+                </div>
+                <h3 class="callout-title">{article.pitfallCallout.title}</h3>
+                {article.pitfallCallout.intro && (
+                  <p class="callout-intro">{article.pitfallCallout.intro}</p>
+                )}
+              </div>
+
+              <div class="callout-items-grid">
+                {article.pitfallCallout.items.map((item, idx) => (
+                  <div class="callout-item">
+                    <div class="callout-item-top">
+                      <span class="callout-num">0{idx + 1}</span>
+                      {item.tag && <span class="callout-tag">{item.tag}</span>}
+                      <h4 class="callout-item-title">{item.title}</h4>
+                    </div>
+                    <p class="callout-item-content" set:html={item.content} />
+                  </div>
+                ))}
+              </div>
+
+              <div class="callout-footer">
+                <div class="callout-footer-icon">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                  </svg>
+                </div>
+                <span>编辑原则：明确区分资料核对与亲自实测，不把商家宣传写成性能结论。</span>
+              </div>
+            </div>
+          )}
+
+
+
+          <!-- Collapsible FAQ Accordion Module (4+ 折叠项, 含错误码与内链) -->
+          {article.faq && article.faq.length > 0 && (
+            <section class="article-faq-section" id="faq-section">
+              <h2 class="faq-section-title">常见问题排查与解答 (FAQ)</h2>
+              <p class="faq-section-subtitle">
+                收录真实使用环境中的高频疑问、错误代码速查与可执行修复脚本，已预设折叠排版。
+              </p>
+
+              <div class="faq-list">
+                {article.faq.map((item, idx) => (
+                  <details class="faq-details">
+                    <summary class="faq-summary">
+                      <span class="faq-question-text">
+                        <span class="faq-q-badge">{idx + 1}</span>
+                        <span>{item.question}</span>
+                      </span>
+                      <svg class="faq-chevron" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"/>
+                      </svg>
+                    </summary>
+                    <div class="faq-answer">
+                      <div set:html={item.answer} />
+                      {(item.errorCode || item.fixInstruction || item.fixContent || item.errorCommand) && (
+                        <div class="faq-fix-card">
+                          <div class="faq-fix-header">
+                            <span class="faq-fix-badge">
+                              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="16 18 22 12 16 6" />
+                                <polyline points="8 6 2 12 8 18" />
+                              </svg>
+                              <span>{item.fixType === 'gui' ? '客户端配置路径' : '终端排错与自检'}</span>
+                            </span>
+                            {item.errorCode && (
+                              <span class="faq-fix-code-tag">{item.errorCode}</span>
+                            )}
+                          </div>
+
+                          {item.fixInstruction && (
+                            <p class="faq-fix-instruction">{item.fixInstruction}</p>
+                          )}
+
+                          {item.fixContent && item.fixType === 'gui' && (
+                            <div class="faq-gui-path-box">
+                              <span class="faq-gui-path-text">{item.fixContent}</span>
+                            </div>
+                          )}
+
+                          {item.errorCommand && (
+                            <div class="faq-terminal-box">
+                              <div class="faq-terminal-code">
+                                <code>{item.errorCommand}</code>
+                              </div>
+                              <button
+                                type="button"
+                                class="faq-terminal-copy-btn"
+                                data-code={item.errorCommand}
+                              >
+                                <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                                </svg>
+                                <span>复制</span>
+                              </button>
+                            </div>
+                          )}
+
+                          {item.relatedLink && (
+                            <div class="faq-fix-footlink">
+                              <span>延伸参考：</span>
+                              {ENABLE_INTERNAL_LINKS ? (
+                                <a href={item.relatedLink.href}>{item.relatedLink.text}</a>
+                              ) : (
+                                <span class="internal-link-placeholder">{item.relatedLink.text}</span>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </details>
+                ))}
+              </div>
+            </section>
+          )}
+
+          <!-- Article Tags -->
+          <div class="article-tags-row">
+            <span style="font-size: 13px; font-weight: 700; color: #6b7280;">标签:</span>
+            <a href={`/category/${article.categorySlug}`} class="article-tag-pill">{article.category}</a>
+            <a href="/category/tutorials" class="article-tag-pill">客户端教程</a>
+            <a href="/category/reviews" class="article-tag-pill">专线评测</a>
+            <a href="/tools" class="article-tag-pill">实用工具</a>
+          </div>
+
+          <!-- Prev / Next Navigation Cards -->
+          <div class="article-prev-next-nav">
+            <a href={`/posts/${prevArticle.slug}`} class="article-nav-card">
+              <span class="nav-card-dir">← 上一篇文章</span>
+              <span class="nav-card-title">{prevArticle.title}</span>
+            </a>
+            <a href={`/posts/${nextArticle.slug}`} class="article-nav-card" style="text-align: right;">
+              <span class="nav-card-dir">下一篇文章 →</span>
+              <span class="nav-card-title">{nextArticle.title}</span>
+            </a>
+          </div>
+
+          <!-- 3-Card Contextual Interlocking Related Articles -->
+          <section class="related-interlock-section">
+            <h3 class="related-interlock-title">深度关联与推荐阅读</h3>
+            <p class="related-interlock-desc">{ENABLE_INTERNAL_LINKS ? '互联互通 · 拒绝知识孤岛（点对点内链精准导流）' : '技术档案整备中 · 待全量文章完善后一键激活内链跳转'}</p>
+
+            <div class="related-interlock-grid">
+              {finalRelated.map((rel) => (
+                ENABLE_INTERNAL_LINKS ? (
+                  <a href={`/posts/${rel.slug}`} class="related-interlock-card">
+                    <span class="interlock-card-tag">{rel.category}</span>
+                    <h4 class="interlock-card-title">{rel.title}</h4>
+                    <div class="interlock-card-foot">
+                      <span>阅读全文</span>
+                      <span class="interlock-card-arrow">→</span>
+                    </div>
+                  </a>
+                ) : (
+                  <div class="related-interlock-card is-pending-link" title="待全量文章完善后激活">
+                    <span class="interlock-card-tag">{rel.category}</span>
+                    <h4 class="interlock-card-title">{rel.title}</h4>
+                    <div class="interlock-card-foot">
+                      <span style="color: #9ca3af; font-size: 13px;">整备待发</span>
+                      <span class="interlock-card-arrow" style="opacity: 0.35;">·</span>
+                    </div>
+                  </div>
+                )
+              ))}
+            </div>
+          </section>
+        </article>
+      </div>
+    </main>
+
+    <!-- Floating Return to Top Button -->
+    <a href="#" class="floating-back-top" aria-label="返回顶部" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="18 15 12 9 6 15"/>
+      </svg>
+    </a>
+
+    <!-- Global Dark Footer with Disclaimer -->
+    <Footer />
+  </div>
+
+  <script>
+    document.querySelectorAll('.faq-terminal-copy-btn, .faq-code-copy-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const code = btn.getAttribute('data-code');
+        if (!code) return;
+        navigator.clipboard.writeText(code);
+        const textSpan = btn.querySelector('span');
+        const target = textSpan || btn;
+        const oldText = target.textContent;
+        target.textContent = '已复制';
+        setTimeout(() => {
+          target.textContent = oldText;
+        }, 2000);
+      });
+    });
+
+    // Reading Progress Bar update
+    const readingBar = document.getElementById('readingProgressBar');
+    if (readingBar) {
+      const updateReadingProgress = () => {
+        const total = document.documentElement.scrollHeight - window.innerHeight;
+        if (total > 0) {
+          const p = (window.scrollY / total) * 100;
+          readingBar.style.width = Math.min(100, Math.max(0, p)) + '%';
+        }
+      };
+      window.addEventListener('scroll', updateReadingProgress, { passive: true });
+      updateReadingProgress();
+    }
+
+    // Graceful fallback if any image fails to load
+    document.querySelectorAll('img').forEach((img) => {
+      img.addEventListener('error', () => {
+        if (!img.getAttribute('data-fallback')) {
+          img.setAttribute('data-fallback', 'true');
+          img.src = '/card-network.webp';
+        }
+      });
+    });
+  </script>
+</BaseLayout>

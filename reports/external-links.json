@@ -1,0 +1,364 @@
+[
+  {
+    "url": "https://aistudio.google.com/",
+    "status": 0,
+    "finalUrl": "",
+    "blocked": true,
+    "dead": false,
+    "error": "fetch failed"
+  },
+  {
+    "url": "https://appleid.apple.com/",
+    "status": 200,
+    "finalUrl": "https://appleid.apple.com/",
+    "blocked": false,
+    "dead": false
+  },
+  {
+    "url": "https://apps.apple.com/app/shadowrocket/id932747118",
+    "status": 200,
+    "finalUrl": "https://apps.apple.com/cn/iphone/today",
+    "blocked": false,
+    "dead": false
+  },
+  {
+    "url": "https://bgp.tools/",
+    "status": 200,
+    "finalUrl": "https://bgp.tools/login?must-login&rdt=%2F&a=6532a6",
+    "blocked": false,
+    "dead": false
+  },
+  {
+    "url": "https://browserleaks.com/dns",
+    "status": 200,
+    "finalUrl": "https://browserleaks.com/dns",
+    "blocked": false,
+    "dead": false
+  },
+  {
+    "url": "https://browserleaks.com/ip",
+    "status": 200,
+    "finalUrl": "https://browserleaks.com/ip",
+    "blocked": false,
+    "dead": false
+  },
+  {
+    "url": "https://fast.com/",
+    "status": 200,
+    "finalUrl": "https://fast.com/",
+    "blocked": false,
+    "dead": false
+  },
+  {
+    "url": "https://gemini.google.com/",
+    "status": 0,
+    "finalUrl": "",
+    "blocked": true,
+    "dead": false,
+    "error": "fetch failed"
+  },
+  {
+    "url": "https://github.com/2dust/v2rayNG/releases",
+    "status": 200,
+    "finalUrl": "https://github.com/2dust/v2rayNG/releases",
+    "blocked": false,
+    "dead": false
+  },
+  {
+    "url": "https://github.com/ACL4SSR/ACL4SSR",
+    "status": 200,
+    "finalUrl": "https://github.com/ACL4SSR/ACL4SSR",
+    "blocked": false,
+    "dead": false
+  },
+  {
+    "url": "https://github.com/clash-verge-rev/clash-verge-rev/releases",
+    "status": 200,
+    "finalUrl": "https://github.com/clash-verge-rev/clash-verge-rev/releases",
+    "blocked": false,
+    "dead": false
+  },
+  {
+    "url": "https://github.com/Loyalsoldier/v2ray-rules-dat",
+    "status": 200,
+    "finalUrl": "https://github.com/Loyalsoldier/v2ray-rules-dat",
+    "blocked": false,
+    "dead": false
+  },
+  {
+    "url": "https://github.com/MetaCubeX/mihomo/releases",
+    "status": 200,
+    "finalUrl": "https://github.com/MetaCubeX/mihomo/releases",
+    "blocked": false,
+    "dead": false
+  },
+  {
+    "url": "https://github.com/nxtrace/Ntrace-core",
+    "status": 200,
+    "finalUrl": "https://github.com/nxtrace/Ntrace-core",
+    "blocked": false,
+    "dead": false
+  },
+  {
+    "url": "https://github.com/Openwrt-Passwall/openwrt-passwall",
+    "status": 200,
+    "finalUrl": "https://github.com/Openwrt-Passwall/openwrt-passwall",
+    "blocked": false,
+    "dead": false
+  },
+  {
+    "url": "https://github.com/SagerNet/sing-box/releases",
+    "status": 200,
+    "finalUrl": "https://github.com/SagerNet/sing-box/releases",
+    "blocked": false,
+    "dead": false
+  },
+  {
+    "url": "https://github.com/tindy2013/subconverter",
+    "status": 200,
+    "finalUrl": "https://github.com/tindy2013/subconverter",
+    "blocked": false,
+    "dead": false
+  },
+  {
+    "url": "https://github.com/vernesong/OpenClash",
+    "status": 200,
+    "finalUrl": "https://github.com/vernesong/OpenClash",
+    "blocked": false,
+    "dead": false
+  },
+  {
+    "url": "https://github.com/XIU2/CloudflareSpeedTest",
+    "status": 200,
+    "finalUrl": "https://github.com/XIU2/CloudflareSpeedTest",
+    "blocked": false,
+    "dead": false
+  },
+  {
+    "url": "https://ipinfo.io/",
+    "status": 200,
+    "finalUrl": "https://ipinfo.io/",
+    "blocked": false,
+    "dead": false
+  },
+  {
+    "url": "https://jsonlint.com/",
+    "status": 200,
+    "finalUrl": "https://jsonlint.com/",
+    "blocked": false,
+    "dead": false
+  },
+  {
+    "url": "https://one.one.one.one/help/",
+    "status": 0,
+    "finalUrl": "",
+    "blocked": true,
+    "dead": false,
+    "error": "fetch failed"
+  },
+  {
+    "url": "https://play.google.com/store/apps/details?id=com.v2ray.ang",
+    "status": 0,
+    "finalUrl": "",
+    "blocked": true,
+    "dead": false,
+    "error": "fetch failed"
+  },
+  {
+    "url": "https://sing-box.sagernet.org/",
+    "status": 0,
+    "finalUrl": "",
+    "blocked": true,
+    "dead": false,
+    "error": "fetch failed"
+  },
+  {
+    "url": "https://status.anthropic.com/",
+    "status": 200,
+    "finalUrl": "https://status.claude.com/",
+    "blocked": false,
+    "dead": false
+  },
+  {
+    "url": "https://status.openai.com/",
+    "status": 200,
+    "finalUrl": "https://status.openai.com/",
+    "blocked": false,
+    "dead": false
+  },
+  {
+    "url": "https://t.me/wanfengzn7",
+    "status": 0,
+    "finalUrl": "",
+    "blocked": true,
+    "dead": false,
+    "error": "fetch failed"
+  },
+  {
+    "url": "https://telegram.org/",
+    "status": 0,
+    "finalUrl": "",
+    "blocked": true,
+    "dead": false,
+    "error": "fetch failed"
+  },
+  {
+    "url": "https://telegram.org/android",
+    "status": 0,
+    "finalUrl": "",
+    "blocked": true,
+    "dead": false,
+    "error": "fetch failed"
+  },
+  {
+    "url": "https://tools.usps.com/zip-code-lookup.htm",
+    "status": 200,
+    "finalUrl": "https://tools.usps.com/zip-code-lookup.htm",
+    "blocked": false,
+    "dead": false
+  },
+  {
+    "url": "https://www.cloudflarestatus.com/",
+    "status": 200,
+    "finalUrl": "https://www.cloudflarestatus.com/",
+    "blocked": false,
+    "dead": false
+  },
+  {
+    "url": "https://www.dnsleaktest.com/",
+    "status": 0,
+    "finalUrl": "",
+    "blocked": true,
+    "dead": false,
+    "error": "fetch failed"
+  },
+  {
+    "url": "https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml",
+    "status": 200,
+    "finalUrl": "https://www.iana.org/assignments/service-names-port-numbers",
+    "blocked": false,
+    "dead": false
+  },
+  {
+    "url": "https://www.speedtest.net/",
+    "status": 200,
+    "finalUrl": "https://www.speedtest.net/",
+    "blocked": false,
+    "dead": false
+  },
+  {
+    "url": "https://www.tiktok.com/@7regan7",
+    "status": 0,
+    "finalUrl": "",
+    "blocked": true,
+    "dead": false,
+    "error": "fetch failed"
+  },
+  {
+    "url": "https://www.yamllint.com/",
+    "status": 0,
+    "finalUrl": "",
+    "blocked": true,
+    "dead": false,
+    "error": "fetch failed"
+  },
+  {
+    "url": "https://www.youtube.com/@Ryan-W77",
+    "status": 0,
+    "finalUrl": "",
+    "blocked": true,
+    "dead": false,
+    "error": "fetch failed"
+  },
+  {
+    "url": "https://x.com/Reganuphc",
+    "status": 0,
+    "finalUrl": "",
+    "blocked": true,
+    "dead": false,
+    "error": "fetch failed"
+  },
+  {
+    "url": "https://zhiwang.one/posts/bianyuan-review-2026/",
+    "status": 200,
+    "finalUrl": "https://zhiwang.one/posts/bianyuan-review-2026/",
+    "blocked": false,
+    "dead": false
+  },
+  {
+    "url": "https://zhiwang.one/posts/dalaoyun-review-2026/",
+    "status": 200,
+    "finalUrl": "https://zhiwang.one/posts/dalaoyun-review-2026/",
+    "blocked": false,
+    "dead": false
+  },
+  {
+    "url": "https://zhiwang.one/posts/feiv-review-2026/",
+    "status": 200,
+    "finalUrl": "https://zhiwang.one/posts/feiv-review-2026/",
+    "blocked": false,
+    "dead": false
+  },
+  {
+    "url": "https://zhiwang.one/posts/huanqiuti-review-2026/",
+    "status": 0,
+    "finalUrl": "",
+    "blocked": true,
+    "dead": false,
+    "error": "fetch failed"
+  },
+  {
+    "url": "https://zhiwang.one/posts/kuaili-review-2026/",
+    "status": 0,
+    "finalUrl": "",
+    "blocked": true,
+    "dead": false,
+    "error": "fetch failed"
+  },
+  {
+    "url": "https://zhiwang.one/posts/lingdongyun-review-2026/",
+    "status": 0,
+    "finalUrl": "",
+    "blocked": true,
+    "dead": false,
+    "error": "fetch failed"
+  },
+  {
+    "url": "https://zhiwang.one/posts/liulianyun-review-2026/",
+    "status": 0,
+    "finalUrl": "",
+    "blocked": true,
+    "dead": false,
+    "error": "fetch failed"
+  },
+  {
+    "url": "https://zhiwang.one/posts/shandianshu-review-2026/",
+    "status": 200,
+    "finalUrl": "https://zhiwang.one/posts/shandianshu-review-2026/",
+    "blocked": false,
+    "dead": false
+  },
+  {
+    "url": "https://zhiwang.one/posts/yunjiexian-review-2026/",
+    "status": 0,
+    "finalUrl": "",
+    "blocked": true,
+    "dead": false,
+    "error": "fetch failed"
+  },
+  {
+    "url": "https://zhiwang.one/rankings/no-expiry/",
+    "status": 200,
+    "finalUrl": "https://zhiwang.one/rankings/no-expiry/",
+    "blocked": false,
+    "dead": false
+  },
+  {
+    "url": "https://zhiwang.one/risk-monitor/",
+    "status": 0,
+    "finalUrl": "",
+    "blocked": true,
+    "dead": false,
+    "error": "fetch failed"
+  }
+]

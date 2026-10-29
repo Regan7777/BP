@@ -1,0 +1,754 @@
+---
+import { navItems } from '../data/site';
+import BrandLogo from './BrandLogo.astro';
+
+interface Props {
+  showAd?: boolean;
+  transparent?: boolean;
+}
+
+const { showAd = true, transparent = false } = Astro.props;
+const rawCurrentPath = Astro.url.pathname;
+const currentPath = rawCurrentPath === '/' ? '/' : rawCurrentPath.replace(/\/+$/, '');
+---
+
+<header class:list={['bp-header-wrapper', { 'header-transparent': transparent }]}>
+  {showAd && (
+    <div class="ad-wrapper">
+      <section class="sx-ad" data-shenxing-carousel aria-label="神行加速优惠信息">
+        <div class="sx-ad__atmosphere" aria-hidden="true"></div>
+
+        <a class="sx-ad__slide is-active" data-sx-slide aria-hidden="false" href="/go/shenxing" target="_blank" rel="sponsored noopener noreferrer" aria-label="前往神行加速，新标签页打开">
+          <div class="sx-ad__copy">
+            <p class="sx-ad__eyebrow">神行加速</p>
+            <h2>神行加速</h2>
+            <p class="sx-ad__detail">不限制设备登录 · 落地住家IP</p>
+          </div>
+          <div class="sx-ad__offer" aria-label="新人优惠百分之三十">
+            <span>新人</span>
+            <strong>-30%</strong>
+          </div>
+        </a>
+
+        <a class="sx-ad__slide" data-sx-slide aria-hidden="true" href="/go/shenxing" target="_blank" rel="sponsored noopener noreferrer" aria-label="前往神行加速，新标签页打开">
+          <div class="sx-ad__copy">
+            <p class="sx-ad__eyebrow">神行加速</p>
+            <h2>住家IP落地</h2>
+            <p class="sx-ad__detail">更稳的网络环境 · 不限制设备登录</p>
+          </div>
+          <div class="sx-ad__offer" aria-label="新人优惠百分之三十">
+            <span>新人</span>
+            <strong>-30%</strong>
+          </div>
+        </a>
+
+        <div class="sx-ad__mask" aria-hidden="true"></div>
+        <div class="sx-ad__pagination" aria-label="广告切换">
+          <button class="is-active" type="button" data-sx-dot aria-label="显示神行加速优惠" aria-current="true"></button>
+          <button type="button" data-sx-dot aria-label="显示住家IP落地优惠" aria-current="false"></button>
+        </div>
+      </section>
+    </div>
+  )}
+
+  <!-- Main Navigation Bar strictly formatted to photo with Dropdown support -->
+  <nav class="bp-nav-bar" aria-label="主导航">
+    <div class="nav-inner">
+      <!-- Brand Logo on Left (Stencil BP BLOG + baipiaojc.com) -->
+      <BrandLogo />
+
+      <button class="bp-menu-toggle" type="button" aria-expanded="false" aria-controls="bpMobileMenu" aria-label="打开导航菜单" data-mobile-menu-toggle>
+        <span></span>
+        <span></span>
+      </button>
+
+      <!-- Right Group (Menu + Socials with continuous bottom line) -->
+      <div class="nav-right-bar" id="navRightBar">
+        <!-- Menu links with dashes -->
+        <div class="bp-menu-links" id="bpNavLinks">
+          <!-- Floating Interactive Indicator Line -->
+          <div class="sliding-indicator" id="navIndicator" aria-hidden="true"></div>
+
+          {navItems.map((item, index) => {
+            const hasChildren = item.children && item.children.length > 0;
+            const isActive = currentPath === item.href || (item.label === '首页' && (currentPath === '/' || currentPath === ''));
+
+            return (
+              <>
+                {hasChildren ? (
+                  <div class="nav-item-has-dropdown" data-nav-target>
+                    <a
+                      href={item.href}
+                      class:list={['bp-menu-item', 'has-dropdown-trigger', { active: isActive }]}
+                      data-active={isActive ? 'true' : 'false'}
+                    >
+                      <span class="nav-item-text">{item.label}</span>
+                      <svg class="dropdown-chevron" viewBox="0 0 12 12" width="11" height="11" fill="none" aria-hidden="true">
+                        <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </a>
+
+                    <!-- Dropdown Panel -->
+                    <div class="bp-dropdown-panel" role="menu">
+                      <div class="dropdown-bridge" aria-hidden="true"></div>
+                      <div class="dropdown-panel-inner">
+                        {item.children!.map((sub) => (
+                          <a href={sub.href} class="dropdown-sub-item" role="menuitem">
+                            <span class="sub-item-title">{sub.label}</span>
+                            {sub.desc && <span class="sub-item-desc">{sub.desc}</span>}
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <a
+                    href={item.href}
+                    class:list={['bp-menu-item', { active: isActive }]}
+                    data-active={isActive ? 'true' : 'false'}
+                    data-nav-target
+                  >
+                    <span class="nav-item-text">{item.label}</span>
+                  </a>
+                )}
+                {index < navItems.length - 1 && <span class="bp-divider" aria-hidden="true">—</span>}
+              </>
+            );
+          })}
+        </div>
+
+        <!-- Social Media Icons on the far right of the bar -->
+        <div class="bp-social-icons">
+          <a href="https://t.me/wanfengzn7" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Telegram">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m22 2-7 20-4-9-9-4Z" />
+              <path d="M22 2 11 13" />
+            </svg>
+          </a>
+          <a href="https://x.com/Reganuphc" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="X">
+            <svg viewBox="0 0 24 24" width="19" height="19" fill="currentColor">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+          </a>
+          <a href="https://www.youtube.com/@Ryan-W77" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="YouTube">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+              <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+            </svg>
+          </a>
+          <a href="https://www.tiktok.com/@7regan7" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="TikTok">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.97-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.24 1.07-.14 1.61.24 1.64 1.82 2.89 3.5 2.76 1.52-.07 2.8-1.18 3.04-2.67.11-.69.11-1.4.11-2.1V.02z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="bp-mobile-menu" id="bpMobileMenu" data-mobile-menu hidden>
+      <div class="bp-mobile-menu__inner">
+        {navItems.map((item) => {
+          const hasChildren = item.children && item.children.length > 0;
+          const isActive = currentPath === item.href || (item.label === '首页' && (currentPath === '/' || currentPath === ''));
+
+          return (
+            <div class="bp-mobile-menu__group">
+              <a href={item.href} class:list={['bp-mobile-menu__link', { active: isActive }]}>
+                {item.label}
+              </a>
+              {hasChildren && (
+                <div class="bp-mobile-menu__sublist">
+                  {item.children!.map((sub) => (
+                    <a href={sub.href} class="bp-mobile-menu__subitem">{sub.label}</a>
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </nav>
+</header>
+
+<style>
+  .ad-wrapper {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 8px 24px 10px;
+  }
+
+  .sx-ad {
+    --sx-ink: #080809;
+    --sx-pink: #e80083;
+    --sx-violet: #5a3aac;
+    --sx-text: #fafafa;
+    position: relative;
+    isolation: isolate;
+    width: 100%;
+    aspect-ratio: 11 / 1;
+    min-height: 72px;
+    max-height: 96px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.19);
+    border-radius: 8px;
+    background: var(--sx-ink);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.055);
+    transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    cursor: pointer;
+  }
+
+  .sx-ad:hover {
+    border-color: rgba(255, 255, 255, 0.35);
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.48), 0 0 24px rgba(232, 0, 131, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px);
+  }
+
+  .sx-ad::before,
+  .sx-ad::after {
+    position: absolute;
+    z-index: -1;
+    content: '';
+    pointer-events: none;
+  }
+
+  .sx-ad::before {
+    inset: -90% -12% -105% 25%;
+    background:
+      radial-gradient(ellipse at 38% 52%, rgba(232, 0, 131, 0.58), transparent 33%),
+      radial-gradient(ellipse at 78% 40%, rgba(90, 58, 172, 0.52), transparent 38%);
+    opacity: 0.88;
+    filter: blur(15px);
+    transform: rotate(-8deg);
+    transition: opacity 0.45s ease, filter 0.45s ease;
+  }
+
+  .sx-ad:hover::before {
+    opacity: 1;
+    filter: blur(13px);
+  }
+
+  .sx-ad::after {
+    inset: 0;
+    background: linear-gradient(90deg, rgba(8, 8, 9, 0.12), rgba(8, 8, 9, 0.42) 49%, rgba(8, 8, 9, 0.08));
+  }
+
+  .sx-ad__atmosphere {
+    position: absolute;
+    z-index: -1;
+    right: 18%;
+    bottom: -42%;
+    width: min(32vw, 400px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.075), transparent 64%);
+    filter: blur(3px);
+    pointer-events: none;
+  }
+
+  .sx-ad__slide {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 20px;
+    padding: clamp(8px, 1.15vw, 15px) clamp(22px, 3.6vw, 46px);
+    color: inherit;
+    text-decoration: none;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(7px);
+    transition: opacity 360ms ease, transform 620ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .sx-ad__slide.is-active {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+
+  .sx-ad__mask {
+    position: absolute;
+    z-index: 4;
+    inset: 0;
+    border-radius: inherit;
+    background:
+      radial-gradient(ellipse at 68% 42%, rgba(232, 0, 131, 0.10), transparent 42%),
+      linear-gradient(90deg, #020203, #09070d 58%, #030304);
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.975);
+  }
+
+  .sx-ad.is-switching .sx-ad__mask {
+    animation: sx-ad-full-cover 920ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @keyframes sx-ad-full-cover {
+    0% { opacity: 0; transform: scale(0.975); }
+    28% { opacity: 0.94; transform: scale(1); }
+    56% { opacity: 0.94; transform: scale(1.003); }
+    100% { opacity: 0; transform: scale(1.018); }
+  }
+
+  .sx-ad__copy {
+    min-width: 0;
+  }
+
+  .sx-ad__eyebrow {
+    margin: 0 0 3px;
+    color: rgba(255, 255, 255, 0.66);
+    font-size: clamp(8.5px, 0.72vw, 10.5px);
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    line-height: 1;
+  }
+
+  .sx-ad h2 {
+    margin: 0;
+    color: var(--sx-text);
+    font-family: 'Plus Jakarta Sans', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    font-size: clamp(19px, 2.1vw, 29px);
+    font-weight: 900;
+    letter-spacing: -0.07em;
+    line-height: 1;
+  }
+
+  .sx-ad__detail {
+    margin: 4px 0 0;
+    color: rgba(255, 255, 255, 0.67);
+    font-size: clamp(9.5px, 0.82vw, 11.5px);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+  }
+
+  .sx-ad__offer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding-right: clamp(16px, 2.8vw, 40px);
+    color: var(--sx-text);
+    line-height: 1;
+  }
+
+  .sx-ad__offer span {
+    margin-bottom: 2px;
+    color: rgba(255, 255, 255, 0.64);
+    font-size: clamp(8.5px, 0.72vw, 10px);
+    font-weight: 800;
+    letter-spacing: 0.14em;
+  }
+
+  .sx-ad__offer strong {
+    font-size: clamp(24px, 3.1vw, 42px);
+    font-weight: 900;
+    letter-spacing: -0.095em;
+    text-shadow: 0 0 28px rgba(232, 0, 131, 0.26);
+  }
+
+  .sx-ad__pagination {
+    position: absolute;
+    z-index: 6;
+    right: clamp(16px, 2.2vw, 28px);
+    bottom: clamp(7px, 1vw, 12px);
+    display: flex;
+    gap: 7px;
+  }
+
+  .sx-ad__pagination button {
+    width: 18px;
+    height: 2.5px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.28);
+    cursor: pointer;
+    transition: width 380ms cubic-bezier(0.25, 1, 0.5, 1), background-color 380ms ease, box-shadow 380ms ease;
+  }
+
+  .sx-ad__pagination button.is-active {
+    width: 30px;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  }
+
+  .sx-ad__pagination button:hover:not(.is-active) {
+    background: rgba(255, 255, 255, 0.55);
+  }
+
+  .sx-ad__pagination button:focus-visible {
+    outline: 2px solid var(--sx-pink);
+    outline-offset: 4px;
+  }
+
+  @media (max-width: 640px) {
+    .ad-wrapper {
+      padding: 6px 16px 8px;
+    }
+
+    .sx-ad {
+      aspect-ratio: auto;
+      min-height: 74px;
+      border-radius: 8px;
+    }
+
+    .sx-ad__slide {
+      padding: 10px 16px;
+      gap: 12px;
+    }
+
+    .sx-ad__detail {
+      max-width: 245px;
+      margin-top: 4px;
+    }
+
+    .sx-ad__offer {
+      padding-right: 14px;
+    }
+
+    .sx-ad__pagination {
+      right: 14px;
+      bottom: 8px;
+    }
+  }
+
+  .bp-menu-toggle,
+  .bp-mobile-menu {
+    display: none;
+  }
+
+  @media (max-width: 960px) {
+    .bp-nav-bar {
+      position: relative;
+    }
+
+    .nav-inner {
+      min-height: 72px;
+      padding: 16px 18px;
+      align-items: center;
+    }
+
+    .nav-right-bar {
+      display: none;
+    }
+
+    .bp-menu-toggle {
+      display: inline-flex;
+      width: 42px;
+      height: 42px;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 6px;
+      margin-left: auto;
+      padding: 0;
+      color: #fff;
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid rgba(255, 255, 255, 0.19);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: border-color .22s ease, background-color .22s ease;
+    }
+
+    .bp-menu-toggle:hover,
+    .bp-menu-toggle[aria-expanded='true'] {
+      background: rgba(0, 240, 160, 0.1);
+      border-color: rgba(0, 240, 160, 0.65);
+    }
+
+    .bp-menu-toggle span {
+      display: block;
+      width: 18px;
+      height: 1.5px;
+      background: currentColor;
+      border-radius: 999px;
+      transition: transform .22s ease;
+    }
+
+    .bp-menu-toggle[aria-expanded='true'] span:first-child {
+      transform: translateY(3.75px) rotate(45deg);
+    }
+
+    .bp-menu-toggle[aria-expanded='true'] span:last-child {
+      transform: translateY(-3.75px) rotate(-45deg);
+    }
+
+    .bp-mobile-menu {
+      position: absolute;
+      z-index: 1200;
+      top: 100%;
+      left: 0;
+      right: 0;
+      display: block;
+      padding: 0 16px 16px;
+      background: #050506;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.48);
+    }
+
+    .bp-mobile-menu[hidden] {
+      display: none;
+    }
+
+    .bp-mobile-menu__inner {
+      max-width: 680px;
+      margin: 0 auto;
+      padding-top: 8px;
+    }
+
+    .bp-mobile-menu__group {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+    }
+
+    .bp-mobile-menu__group:last-child {
+      border-bottom: 0;
+    }
+
+    .bp-mobile-menu__link {
+      display: flex;
+      align-items: center;
+      min-height: 49px;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .bp-mobile-menu__link.active {
+      color: var(--bp-accent-green);
+    }
+
+    .bp-mobile-menu__sublist {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 6px 16px;
+      padding: 0 0 13px;
+    }
+
+    .bp-mobile-menu__subitem {
+      color: var(--bp-text-sub);
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.4;
+      text-decoration: none;
+    }
+
+    .bp-mobile-menu__subitem:active,
+    .bp-mobile-menu__subitem:hover {
+      color: var(--bp-accent-green);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sx-ad,
+    .sx-ad::before,
+    .sx-ad__slide,
+    .sx-ad__pagination button {
+      transition: none;
+    }
+  }
+</style>
+
+<script is:inline>
+  function setupNavInteraction() {
+    const navLinksContainer = document.getElementById('bpNavLinks');
+    const indicator = document.getElementById('navIndicator');
+    if (!navLinksContainer || !indicator) return;
+
+    const targets = navLinksContainer.querySelectorAll('[data-nav-target]');
+    let activeTarget = navLinksContainer.querySelector('[data-nav-target].active') ||
+                        navLinksContainer.querySelector('[data-nav-target] .active')?.closest('[data-nav-target]') ||
+                        targets[0];
+
+    function updateIndicator(target, animate = true) {
+      if (!target) return;
+      const textSpan = target.querySelector('.nav-item-text') || target.querySelector('a') || target;
+
+      const containerRect = navLinksContainer.getBoundingClientRect();
+      const targetRect = textSpan.getBoundingClientRect();
+      const left = targetRect.left - containerRect.left;
+      const width = targetRect.width;
+
+      if (!animate) {
+        indicator.style.transition = 'none';
+      } else {
+        indicator.style.transition = 'transform 0.28s cubic-bezier(0.4, 0, 0.2, 1), width 0.28s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s';
+      }
+
+      indicator.style.width = width + 'px';
+      indicator.style.transform = `translateX(${left}px)`;
+      indicator.style.opacity = '1';
+    }
+
+    // Set initial position
+    if (activeTarget) {
+      setTimeout(() => updateIndicator(activeTarget, false), 50);
+    }
+
+    targets.forEach((target) => {
+      target.addEventListener('mouseenter', () => {
+        updateIndicator(target, true);
+      });
+    });
+
+    navLinksContainer.addEventListener('mouseleave', () => {
+      if (activeTarget) {
+        updateIndicator(activeTarget, true);
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      if (activeTarget) {
+        updateIndicator(activeTarget, false);
+      }
+    });
+  }
+
+  function setupMobileNav() {
+    const toggle = document.querySelector('[data-mobile-menu-toggle]');
+    const menu = document.querySelector('[data-mobile-menu]');
+    if (!(toggle instanceof HTMLButtonElement) || !(menu instanceof HTMLElement) || toggle.dataset.ready === 'true') return;
+
+    toggle.dataset.ready = 'true';
+
+    const close = () => {
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', '打开导航菜单');
+      menu.hidden = true;
+    };
+
+    const open = () => {
+      toggle.setAttribute('aria-expanded', 'true');
+      toggle.setAttribute('aria-label', '关闭导航菜单');
+      menu.hidden = false;
+    };
+
+    toggle.addEventListener('click', () => {
+      if (toggle.getAttribute('aria-expanded') === 'true') close();
+      else open();
+    });
+
+    menu.querySelectorAll('a').forEach((link) => link.addEventListener('click', close));
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') close();
+    });
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 960) close();
+    });
+  }
+
+  function setupShenxingCarousel() {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    document.querySelectorAll('[data-shenxing-carousel]').forEach((carousel) => {
+      if (carousel.dataset.ready === 'true') return;
+      carousel.dataset.ready = 'true';
+
+      const slides = Array.from(carousel.querySelectorAll('[data-sx-slide]'));
+      const dots = Array.from(carousel.querySelectorAll('[data-sx-dot]'));
+      if (slides.length < 2 || dots.length !== slides.length) return;
+
+      let activeIndex = 0;
+      let timer;
+      let paused = false;
+      let isTransitioning = false;
+
+      const paint = (nextIndex) => {
+        if (nextIndex === activeIndex || isTransitioning) return;
+
+        const prevSlide = slides[activeIndex];
+        const nextSlide = slides[nextIndex];
+
+        const applySlide = () => {
+          prevSlide.classList.remove('is-active');
+          nextSlide.classList.add('is-active');
+          prevSlide.setAttribute('aria-hidden', 'true');
+          nextSlide.setAttribute('aria-hidden', 'false');
+
+          dots.forEach((dot, index) => {
+            const isActive = index === nextIndex;
+            dot.classList.toggle('is-active', isActive);
+            dot.setAttribute('aria-current', String(isActive));
+          });
+
+          activeIndex = nextIndex;
+        };
+
+        if (reducedMotion) {
+          applySlide();
+          return;
+        }
+
+        isTransitioning = true;
+        carousel.classList.remove('is-switching');
+        void carousel.offsetWidth;
+        carousel.classList.add('is-switching');
+        window.setTimeout(applySlide, 390);
+        window.setTimeout(() => {
+          carousel.classList.remove('is-switching');
+          isTransitioning = false;
+        }, 940);
+      };
+
+      const stop = () => {
+        if (timer) {
+          window.clearInterval(timer);
+          timer = undefined;
+        }
+      };
+
+      const start = () => {
+        if (reducedMotion || paused || timer) return;
+        timer = window.setInterval(() => {
+          paint((activeIndex + 1) % slides.length);
+        }, 3000);
+      };
+
+      dots.forEach((dot, index) => {
+        dot.addEventListener('click', (e) => {
+          e.stopPropagation();
+          paint(index);
+          stop();
+          window.setTimeout(start, 960);
+        });
+      });
+
+      carousel.addEventListener('mouseenter', () => {
+        paused = true;
+        stop();
+      });
+      carousel.addEventListener('mouseleave', () => {
+        paused = false;
+        start();
+      });
+      carousel.addEventListener('focusin', () => {
+        paused = true;
+        stop();
+      });
+      carousel.addEventListener('focusout', () => {
+        if (!carousel.contains(document.activeElement)) {
+          paused = false;
+          start();
+        }
+      });
+
+      start();
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      setupNavInteraction();
+      setupMobileNav();
+      setupShenxingCarousel();
+    });
+  } else {
+    setupNavInteraction();
+    setupMobileNav();
+    setupShenxingCarousel();
+  }
+</script>

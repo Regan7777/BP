@@ -1,0 +1,23 @@
+---
+interface Props {
+  className?: string;
+  isFooter?: boolean;
+}
+
+const { className = '', isFooter = false } = Astro.props;
+---
+
+<a href="/" class:list={['bp-brand-container', className, { 'footer-brand-wrap': isFooter }]} aria-label="BP 首页 - baipiaojc.com">
+  <picture class="bp-brand-picture">
+    <source srcset="/logo.webp" type="image/webp" />
+    <img
+      src="/logo.png"
+      alt="BP"
+      class="bp-brand-img"
+      width="566"
+      height="331"
+      loading="eager"
+      decoding="async"
+    />
+  </picture>
+</a>

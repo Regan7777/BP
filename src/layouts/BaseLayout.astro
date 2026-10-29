@@ -1,0 +1,180 @@
+---
+import '../styles/global.css';
+import '../styles/refined.css';
+import '../styles/post.css';
+import '../styles/theme.css';
+
+import SearchModal from '../components/SearchModal.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  keywords?: string[] | string;
+  canonicalUrl?: string;
+  image?: string;
+  type?: 'website' | 'article';
+  schemaJsonLd?: Record<string, any> | Array<Record<string, any>>;
+}
+
+const {
+  title = 'biaopiao - 机场推荐与前沿网络指南',
+  description = 'biaopiao (baipiaojc.com) 提供专业的网络代理工具、机场测速评测与节点排错实用指南。',
+  keywords = ['机场推荐', '机场评测', '客户端配置', '科学上网教程', 'Clash Verge Rev', 'Sing-box', 'PassWall', 'OpenClash', 'biaopiao'],
+  canonicalUrl,
+  image = '/logo.png',
+  type = 'website',
+  schemaJsonLd
+} = Astro.props;
+
+const siteUrl = 'https://baipiaojc.com';
+const canonical = canonicalUrl || new URL(Astro.url.pathname, siteUrl).href;
+const imageUrl = image.startsWith('http') ? image : `${siteUrl}${image.startsWith('/') ? '' : '/'}${image}`;
+const keywordsContent = Array.isArray(keywords) ? keywords.join(', ') : keywords;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {keywordsContent && <meta name="keywords" content={keywordsContent} />}
+    <link rel="canonical" href={canonical} />
+
+    <!-- Bing & Search Engine Crawler Directives (High CTR & Large Preview) -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+
+    <!-- AI Agent & LLM Context Discoverability -->
+    <link rel="alternate" type="text/markdown" title="LLM Context" href="/llms.txt" />
+
+    <!-- Search Engine Ownership Verification Placeholders (填写您的站长验证码即可生效) -->
+    <!-- <meta name="msvalidate.01" content="YOUR_BING_VERIFICATION_CODE" /> -->
+    <!-- <meta name="google-site-verification" content="YOUR_GOOGLE_VERIFICATION_CODE" /> -->
+
+    <!-- Open Graph / Social Sharing -->
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:site_name" content="biaopiao" />
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={imageUrl} />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+
+    <!-- Icons -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="64x64" href="/favicon-64.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+    <!-- Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+    <!-- Schema.org / JSON-LD Structured Data for Bing Rich Snippets & AI Copilot -->
+    {schemaJsonLd && (
+      <script type="application/ld+json" set:html={JSON.stringify(schemaJsonLd)} />
+    )}
+  </head>
+  <body class="bp-theme">
+    <slot />
+
+    <!-- Global Floating Toast Notification -->
+    <div id="globalToast" class="bp-toast" aria-live="polite">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#00f0a0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+      <span id="toastMsg">已复制到剪贴板！</span>
+    </div>
+
+    <!-- Global Full-text Cmd+K Search Modal -->
+    <SearchModal />
+
+    <script is:inline>
+      (function() {
+        // Global Toast Utility
+        let toastTimeout;
+        window.showToast = function(msg = '已复制到剪贴板！') {
+          const toast = document.getElementById('globalToast');
+          const toastMsg = document.getElementById('toastMsg');
+          if (!toast || !toastMsg) return;
+          toastMsg.textContent = msg;
+          toast.classList.add('show');
+          clearTimeout(toastTimeout);
+          toastTimeout = setTimeout(() => {
+            toast.classList.remove('show');
+          }, 2200);
+        };
+
+        // Universal Code Block Copy Buttons
+        function initCodeCopy() {
+          const codeBlocks = document.querySelectorAll('.article-main-body pre, .curated-table-container pre');
+          codeBlocks.forEach((pre) => {
+            if (pre.querySelector('.code-copy-btn')) return;
+            const btn = document.createElement('button');
+            btn.className = 'code-copy-btn';
+            btn.type = 'button';
+            btn.setAttribute('aria-label', '复制代码');
+            btn.innerHTML = `
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <span>复制</span>
+            `;
+            btn.addEventListener('click', () => {
+              const code = pre.querySelector('code');
+              const text = code ? code.innerText : pre.innerText;
+              navigator.clipboard.writeText(text.trim()).then(() => {
+                btn.classList.add('copied');
+                btn.innerHTML = `
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                  <span>已复制</span>
+                `;
+                window.showToast('代码已复制到剪贴板！');
+                setTimeout(() => {
+                  btn.classList.remove('copied');
+                  btn.innerHTML = `
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    <span>复制</span>
+                  `;
+                }, 2000);
+              });
+            });
+            pre.appendChild(btn);
+          });
+        }
+
+        // Delegate [data-copy] clicks (e.g. promo codes, coupons)
+        document.addEventListener('click', (e) => {
+          const copyEl = e.target.closest('[data-copy]');
+          if (!copyEl) return;
+          const text = copyEl.getAttribute('data-copy');
+          if (text) {
+            navigator.clipboard.writeText(text);
+            window.showToast(`已复制：${text}`);
+          }
+        });
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initCodeCopy);
+        } else {
+          initCodeCopy();
+        }
+      })();
+    </script>
+  </body>
+</html>

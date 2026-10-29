@@ -1,0 +1,95 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import CuratedListItem from '../../components/CuratedListItem.astro';
+import { articles, categories } from '../../data/site';
+
+export function getStaticPaths() {
+  return categories.map((category) => {
+    let categoryArticles = articles.filter((article) => article.categorySlug === category.slug);
+
+    if (category.slug === 'reviews') {
+      // 所有已配置官网入口的机场文章，都归入机场评测列表。
+      categoryArticles = articles.filter((article) => Boolean(article.affiliatePath));
+    }
+
+    if (category.slug === 'recommendations') {
+      // 推荐页展示神行加速与五篇基于公开资料整理的选购指南。
+      categoryArticles = articles.filter((article) => article.slug === 'shenxingjiasu-review' || article.categorySlug === 'recommendations');
+    }
+
+    return {
+      params: { slug: category.slug },
+      props: {
+        category,
+        articles: categoryArticles
+      }
+    };
+  });
+}
+
+const { category, articles: categoryArticles } = Astro.props;
+const countFormatted = String(categoryArticles.length).padStart(2, '0');
+---
+
+<BaseLayout title={`${category.name}｜biaopiao`} description={category.description}>
+  <Header />
+
+  <main class="curated-page-shell">
+    <!-- Header Title Section (1:1 with reference photo) -->
+    <header class="curated-hero">
+      <span class="curated-badge-label">CURATED LIST / {countFormatted}</span>
+      <div class="curated-title-row">
+        <h1 class="curated-main-title">{category.name}</h1>
+        <div class="curated-title-divider" aria-hidden="true"></div>
+        <p class="curated-tagline">{category.description}</p>
+      </div>
+    </header>
+
+    <!-- Curated Table List Frame -->
+    <div class="curated-table-container">
+      {categoryArticles.length > 0 ? (
+        categoryArticles.map((article, index) => {
+          const isFirst = index === 0;
+          const isTutorial = category.slug === 'tutorials';
+          const isTool = category.slug === 'tools';
+
+          const col1Label = isTutorial ? '平台' : (isTool ? '类型' : '价格');
+          const col1Value = article.price || article.platform || (isTool ? '网络检测' : '¥20 / 月');
+
+          const col2Label = isTutorial ? '类型' : (isTool ? '范围' : '地区');
+          const col2Value = article.region || (isTutorial ? '配置指南' : (isTool ? '全链路' : '香港 / 日本'));
+
+          const col3Label = '更新';
+          const col3Value = article.updatedDate || article.date;
+
+          return (
+            <CuratedListItem
+              title={article.title}
+              href={`/posts/${article.slug}`}
+              affiliateHref={article.affiliatePath}
+              col1Label={col1Label}
+              col1Value={col1Value}
+              col2Label={col2Label}
+              col2Value={col2Value}
+              col3Label={col3Label}
+              col3Value={col3Value}
+              isActive={isFirst}
+            />
+          );
+        })
+      ) : (
+        <div class="curated-empty-state">
+          <div class="curated-empty-inner">
+            <span class="curated-empty-dot" aria-hidden="true"></span>
+            <span>条目整备中 &middot; 保持留白与纯净收录</span>
+          </div>
+        </div>
+      )}
+    </div>
+  </main>
+
+  <!-- Global Dark Footer with Disclaimer -->
+  <Footer />
+</BaseLayout>

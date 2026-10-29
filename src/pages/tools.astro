@@ -1,0 +1,75 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import CuratedListItem from '../components/CuratedListItem.astro';
+import { articles, categories } from '../data/site';
+
+const toolCategory = categories.find((c) => c.slug === 'tools') || {
+  name: '实用工具',
+  description: '聚焦链路与协议诊断，为异常网络排查提供轻量切片工具。'
+};
+
+const toolArticles = articles.filter((a) => a.categorySlug === 'tools');
+
+const toolMetaMap: Record<string, { type: string; scope: string }> = {
+  'local-format-validator': { type: '格式校验', scope: '本地离线 / YAML' },
+  'subconverter-online-guide': { type: '协议转换', scope: '全客户端规则' },
+  'vps-route-interpreter': { type: '线路溯源', scope: 'CN2 / 9929 路由' },
+  'ai-connectivity-unlock-test': { type: 'AI解锁', scope: 'OpenAI / Claude' },
+  'speedtest-network-benchmark': { type: '带宽吞吐', scope: '单线程 / 晚高峰' },
+  'cloudflare-ip-speedtest': { type: 'CF优选', scope: 'CDN / 延迟优化' },
+  'dns-leak-test-and-diagnostics': { type: '安全诊断', scope: 'DNS / WebRTC' }
+};
+const countFormatted = String(toolArticles.length).padStart(2, '0');
+---
+
+<BaseLayout title={`网络诊断工具箱｜${toolArticles.length} 个实用工具｜biaopiao`} description={`汇总 ${toolArticles.length} 个网络诊断、格式校验、线路溯源与连接检测工具，按用途快速定位问题。`}>
+  <Header />
+
+  <main class="curated-page-shell">
+    <!-- Header Title Section (1:1 with reference photo) -->
+    <header class="curated-hero">
+      <span class="curated-badge-label">CURATED LIST / {countFormatted}</span>
+      <div class="curated-title-row">
+        <h1 class="curated-main-title">{toolCategory.name}</h1>
+        <div class="curated-title-divider" aria-hidden="true"></div>
+        <p class="curated-tagline">{toolCategory.description}</p>
+      </div>
+    </header>
+
+    <!-- Curated Table List Frame -->
+    <div class="curated-table-container">
+      {toolArticles.length > 0 ? (
+        toolArticles.map((article, index) => {
+          const isFirst = index === 0;
+          const meta = toolMetaMap[article.slug] || { type: '诊断排查', scope: '全链路' };
+
+          return (
+            <CuratedListItem
+              title={article.title}
+              href={`/posts/${article.slug}`}
+              col1Label="类型"
+              col1Value={meta.type}
+              col2Label="范围"
+              col2Value={meta.scope}
+              col3Label="更新"
+              col3Value={article.updatedDate || article.date}
+              isActive={isFirst}
+            />
+          );
+        })
+      ) : (
+        <div class="curated-empty-state">
+          <div class="curated-empty-inner">
+            <span class="curated-empty-dot" aria-hidden="true"></span>
+            <span>条目整备中 &middot; 保持留白与纯净收录</span>
+          </div>
+        </div>
+      )}
+    </div>
+  </main>
+
+  <!-- Global Dark Footer with Disclaimer -->
+  <Footer />
+</BaseLayout>
