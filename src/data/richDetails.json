@@ -1600,9 +1600,9 @@
         }
       ],
       "relatedSlugs": [
+        "deepseek-harness-architecture-analysis",
         "ai-chatgpt-claude-gemini-guide",
-        "dns-leak-test-and-diagnostics",
-        "proxy-modes-comparison"
+        "dns-leak-test-and-diagnostics"
       ]
     },
     "speedtest-network-benchmark": {
@@ -3499,7 +3499,8 @@
           "lead": "为重度 AI 创作者打造的长期稳定防封配置基线。",
           "paragraphs": [
             "如果你需要日常依赖 Claude 3.5 和 ChatGPT 进行重度代码编写或商业创作，请遵循以下长期保活原则：",
-            "• <strong>固定专用节点</strong>：在客户端配置里，将 <code>domain-suffix: anthropic.com</code> 和 <code>domain-suffix: claude.ai</code> 专门绑定到一条固定的美国静态节点上，绝不跟随其他流量自动轮询；<br />• <strong>独立浏览器 Profile</strong>：在 Chrome 或 Edge 中单独新建一个专门用于登录 AI 的用户配置（Profile），不安装任何国内插件，关闭所有抓包与广告拦截扩展；<br />• <strong>会话保持习惯</strong>：每次使用完毕后不要主动登出，下次打开浏览器直接继续使用，保持 Cookie 会话的自然延续。"
+            "• <strong>固定专用节点</strong>：在客户端配置里，将 <code>domain-suffix: anthropic.com</code> 和 <code>domain-suffix: claude.ai</code> 专门绑定到一条固定的美国静态节点上，绝不跟随其他流量自动轮询；<br />• <strong>独立浏览器 Profile</strong>：在 Chrome 或 Edge 中单独新建一个专门用于登录 AI 的用户配置（Profile），不安装任何国内插件，关闭所有抓包与广告拦截扩展；<br />• <strong>会话保持习惯</strong>：每次使用完毕后不要主动登出，下次打开浏览器直接继续使用，保持 Cookie 会话的自然延续。",
+            "对于需要将 AI 模型直连本地代码库实现自主纠错与终端调用的高级开发者，建议结合 <a href=\"/posts/deepseek-harness-architecture-analysis\">DeepSeek Harness 架构与自主 Agent 闭环实战</a>，利用轻量微内核与本地沙箱打造零封禁、全离线的私有化开发环境。"
           ]
         }
       ],
@@ -3526,9 +3527,9 @@
         }
       ],
       "relatedSlugs": [
+        "deepseek-harness-architecture-analysis",
         "proxy-modes-comparison",
-        "us-apple-id-registration-guide",
-        "streaming-social-media-troubleshooting"
+        "us-apple-id-registration-guide"
       ]
     },
     "streaming-social-media-troubleshooting": {
@@ -4469,6 +4470,151 @@
         "beginner-complete-guide",
         "speedtest-network-benchmark",
         "ai-connectivity-unlock-test"
+      ]
+    },
+    "deepseek-harness-architecture-analysis": {
+      "directAnswer": "DeepSeek Harness（dsh）是 DeepSeek 官方开源的高性能自主智能体（Agent）运行时底座。与单纯依靠 System Prompt 的传统对话包装不同，Harness 基于 Cordis 响应式插件框架构建，将模型适配器、工具注册表、终端执行流、会话日志与循环调度器彻底模块化解耦，实现了真正的“一切皆插件”。它赋予 LLM 在本地工作区中自主探索、调用工具、捕获并自愈代码报错、直至任务完成的闭环执行力。无论是搭配 DeepSeek-V3/R1 还是兼容本地 Ollama/vLLM 私有化端点，都是当前开源生态中最轻量、无厂商绑定的 Agent 工程标杆。",
+      "keywords": [
+        "DeepSeek Harness",
+        "DeepSeek Agent运行时",
+        "dsh命令行教程",
+        "Cordis插件框架",
+        "DeepSeek-V3 Agent",
+        "开源Agent部署",
+        "自主代码调试",
+        "DeepSeek微内核"
+      ],
+      "prosAndCons": {
+        "prosTitle": "Harness 核心架构优势",
+        "pros": [
+          "底层依托 Cordis 微内核生命周期，所有组件均可热插拔替换，杜绝 LangChain 等重型框架的黑盒膨胀",
+          "原生支持跨模型生态，一键无缝接入 DeepSeek 官方 API、OpenAI 协议及本地 Ollama 私有模型",
+          "具备完善的本地工作区终端与文件读写沙箱闭环，自带报错自动捕获与多轮反思重试机制",
+          "提供轻量极速的 CLI（dsh）与即开即用的本地 Web 控制台，极度符合一线极客开发心智"
+        ],
+        "consTitle": "实操落地高危踩坑点",
+        "cons": [
+          "本地终端执行默认拥有当前环境读写权限，生产环境务必配置 Docker 沙箱隔离，严防高危误删命令",
+          "非长思考强化模型在多轮复杂工具调度中偶有上下文失真，长任务建议锁死 DeepSeek-V3 或 R1 核心"
+        ]
+      },
+      "sections": [
+        {
+          "id": "harness-core-architecture",
+          "num": 1,
+          "title": "为什么需要 Harness？从“对话包装”到“真闭环 Agent”的范式跃迁",
+          "lead": "市面上 90% 的所谓 Agent 仅仅是拼接 Prompt 的玩具，而 Harness 重构了模型与操作系统的交互底座。",
+          "paragraphs": [
+            "过去两年很多开发者折腾过各类 Agent 框架，但几乎都受困于臃肿的抽象层与黑盒依赖。DeepSeek Harness 的设计哲学完全不同：它不试图包办一切业务逻辑，而是专注提供一个高响应、强透明的<span class=\"keyword-highlight\">“执行器（Runtime Harness）”</span>。",
+            "它的核心使命只有三件事：把自然语言任务转化为结构化指令、把指令派发到本地终端与文件系统、在执行报错时精准捕获标准差错流并反馈给模型修正。想深入了解网络层稳定性如何影响 AI 接口调用的兄弟，可先复习 <a href=\"/posts/ai-chatgpt-claude-gemini-guide\">顶级 AI 账号与高纯净网络防风控指南</a>。"
+          ],
+          "table": {
+            "headers": [
+              "架构维度",
+              "传统 Prompt 对话框架",
+              "DeepSeek Harness (dsh)"
+            ],
+            "rows": [
+              [
+                "内核设计",
+                "硬编码死循环 / 强行链式拼接",
+                "基于 Cordis 响应式插件微内核，一切组件可插拔"
+              ],
+              [
+                "工具调度",
+                "简单的单次 Function Calling",
+                "多步骤自主反思、状态持久化与报错自愈闭环"
+              ],
+              [
+                "模型依赖",
+                "深度绑定专有商业闭源 API",
+                "模型完全解耦，支持 DeepSeek、OpenAI 与本地 Ollama"
+              ],
+              [
+                "执行环境",
+                "浏览器沙盒或依赖外部托管",
+                "原生宿主机/Docker 隔离双模式，支持完整终端权限"
+              ],
+              [
+                "调试成本",
+                "日志模糊，难以复现中间态",
+                "轻量 session 链路持久化，可逐帧回放指令轨迹"
+              ]
+            ]
+          }
+        },
+        {
+          "id": "cordis-plugin-kernel",
+          "num": 2,
+          "title": "Cordis 响应式插件微内核：拆解“一切皆插件”的工程设计",
+          "lead": "将生命周期、依赖注入与事件总线做到极致解耦，赋予系统极强的可扩展性。",
+          "paragraphs": [
+            "Harness 最惊艳的工程底座来自于对 Cordis 框架的巧妙运用。在传统架构中，Model Adapter（模型适配器）、Tool Registry（工具注册表）、Session Logger（会话记录）往往彼此耦合纠缠。一旦要替换一个私有模型或新增一套终端工具，往往要改动核心调度链条。",
+            "在 Harness 中，微内核只负责事件分发与依赖注入上下文（Context）。无论是调用 <code>git status</code>、执行单测，还是将 Token 吞吐持久化至 SQLite，全部以标准 Cordis 插件形式装配。这种设计让团队可以在数十分钟内编写出专属的内网代码安全合规插件，而不影响整体运行时生命周期。遇到终端环境配置或格式报错时，建议搭配 <a href=\"/posts/local-format-validator\">本地格式与语法离线校验工具</a> 快速自检。"
+          ]
+        },
+        {
+          "id": "autonomous-loop-mechanism",
+          "num": 3,
+          "title": "自主执行环（Autonomous Loop）：报错捕获、状态自愈与终止判定",
+          "lead": "Agent 到底能不能独立干脏活，全看这套自愈闭环的鲁棒性。",
+          "paragraphs": [
+            "真正的生产力瓶颈从来不是“模型生成了代码”，而是“代码在本地机器跑崩后谁来擦屁股”。Harness 内置了一个状态机驱动的执行环（Task Loop）：每次工具调用返回非零退出码（Exit Code != 0）时，系统绝不抛出未经处理的异常中断任务，而是将 stderr 与环境快照封装为结构化观察（Observation）重新喂给上下文。",
+            "我们在真实测试中给它下达“重构一个老旧 TypeScript 模块并修复所有 ESLint 警告”的任务，模型在经历 4 次构建失败、逐步排查三方类型冲突后，最终自动执行 <code>git diff</code> 验收并提交。整个过程零人工介入。网络连通与 API 响应延迟会直接影响大模型思考吞吐，推荐参考 <a href=\"/posts/speedtest-network-benchmark\">Speedtest 单线程与晚高峰实测指标</a> 优化调用链路。"
+          ]
+        },
+        {
+          "id": "cli-and-web-deployment",
+          "num": 4,
+          "title": "五分钟实战上手：从 CLI 命令行到本地 Web 控制台实操",
+          "lead": "两条指令即可在本地跑起属于你自己的 DeepSeek 自主智能体。",
+          "paragraphs": [
+            "Harness 的启动流程对极客极其友好，无需配置复杂的 Python 虚拟环境与重型 Docker 容器池。只需全局安装 <code>@deepseek-ai/dsh</code> 或通过 npx 直接唤起：先通过 <code>dsh config</code> 填入 DeepSeek API Key（或指定私有 Ollama 端点），随后即可在任何项目代码根目录下键入 <code>dsh</code> 启动极客终端交互模式。",
+            "如果你更习惯可视化界面，运行 <code>npx @deepseek-ai/dsh web</code> 即可在本地唤起类似 Cursor / Devin 体验的控制面板，直观查看文件变动树、终端输出日志与模型思考链路。多端分流与海外 AI 接口直连技巧可查阅 <a href=\"/posts/proxy-modes-comparison\">代理分流模式与白名单配置实战</a>。"
+          ]
+        },
+        {
+          "id": "security-sandbox-pitfalls",
+          "num": 5,
+          "title": "生产级落地三大防踩坑清单：权限隔离、上下文膨胀与风控保障",
+          "lead": "交出终端执行权限意味着极高风险，守住安全边界才能高枕无忧。",
+          "paragraphs": [
+            "第一是<strong>宿主机命令越权防范</strong>：切勿在 root 权限下或包含私有密钥（如 <code>.env</code>、<code>id_rsa</code>）的敏感目录中直接运行未经沙箱隔离的 Agent。务必通过 Docker 或非特权子账号运行，并配置指令黑名单拦截如 <code>rm -rf /</code> 或破坏性数据库操作。",
+            "第二是<strong>上下文雪崩与 Token 控制</strong>：在连续数十轮的报错修正中，若不启用 Harness 的滑动窗口压缩插件，Token 消耗会呈指数级暴涨。务必在配置文件中开启中继会话持久化与自动化剪枝。",
+            "第三是<strong>网络通信与 API 纯净度</strong>：调用海外顶级模型端点时若 IP 遭遇机房风控，极易出现 429 或连接挂起。确保本地网络具备稳定的专线转发支持，具体可参考 <a href=\"/posts/beginner-complete-guide\">全平台客户端安装与网络连通性一站式指南</a>。"
+          ]
+        }
+      ],
+      "faq": [
+        {
+          "question": "启动 dsh 时报错 connect ECONNREFUSED 或 API 401 Unauthorized 怎么办？",
+          "answer": "该错误多因本地未正确配置 DEEPSEEK_API_KEY 环境变量，或代理未对 API 域名正确放行。请检查配置文件并刷新网络连接状态。",
+          "errorCode": "AUTH_401_CONN",
+          "fixType": "terminal",
+          "fixInstruction": "在终端依次运行以下指令，重设环境变量并刷新网络缓存：",
+          "errorCommand": "export DEEPSEEK_API_KEY=\"你的密钥\" && ipconfig /flushdns",
+          "relatedLink": {
+            "text": "DNS 泄露与全链路排查中心",
+            "href": "/posts/dns-leak-test-and-diagnostics"
+          }
+        },
+        {
+          "question": "DeepSeek Harness 能否脱网使用本地部署的开源大模型？",
+          "answer": "完全可以。Harness 的 Model Adapter 插件原生兼容 OpenAI 标准协议规范。在本地通过 Ollama 启动 DeepSeek-R1-Distill-Qwen 或 vLLM 后，只需在配置文件中将 baseUrl 指向 http://localhost:11434/v1 即可实现 100% 离线隐私运行。"
+        },
+        {
+          "question": "Agent 在终端执行长时间编译命令卡死不返回怎么办？",
+          "answer": "Harness 核心调度器提供了超时熔断机制。如遇长时间无输出的守护进程（如持续运行的 dev server 或未带超时参数的 ping），按 Ctrl+C 可单次中断当前工具调用并向上下文返回用户中断信号，引导模型调整命令参数。"
+        },
+        {
+          "question": "如何防止 Agent 自主执行时误删项目中的关键生产资产？",
+          "answer": "在 dsh.config.json 中配置安全策略（Security Policy），开启 require_approval 机制，针对破坏性命令（如 git reset --hard、rm、drop table 等）强制弹出人工确认，或挂载只读卷隔离关键根目录。"
+        }
+      ],
+      "relatedSlugs": [
+        "ai-chatgpt-claude-gemini-guide",
+        "ai-connectivity-unlock-test",
+        "beginner-complete-guide"
       ]
     }
   },

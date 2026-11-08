@@ -134,6 +134,21 @@ export const navItems: NavItem[] = [
 
 export const trendingArticles: Article[] = [
   {
+    slug: 'deepseek-harness-architecture-analysis',
+    title: 'DeepSeek Harness 深度剖析：Cordis 插件内核、自主 Agent 闭环与实战部署指南',
+    category: '客户端教程',
+    categorySlug: 'tutorials',
+    author: 'LT-博主',
+    date: '2026.11.08',
+    updatedDate: '2026-11-08',
+    platform: 'AI Agent 运行时',
+    region: '架构与避坑',
+    readTime: '11 分钟',
+    excerpt: '深度拆解 DeepSeek 官方开源 Agent 框架 Harness（dsh）：剖析基于 Cordis 的全插件化微内核、模型与工具解耦机制，以及多轮循环自愈闭环；附 CLI/Web 端实战部署与私有模型接入防踩坑手册。',
+    image: '/deepseek-harness-core.webp',
+    trending: true
+  },
+  {
     slug: 'shadowrocket-ios-tutorial',
     title: 'iOS 苹果科学上网指南：Shadowrocket（小火箭）安装、节点导入与规则配置',
     category: '客户端教程',
@@ -405,6 +420,23 @@ const airportReviewSeeds: AirportRecommendationSeed[] = [
 ];
 
 const rawArticles: Article[] = [
+  // 最新独家深度剖析：DeepSeek Harness
+  {
+    slug: 'deepseek-harness-architecture-analysis',
+    title: 'DeepSeek Harness 深度剖析：Cordis 插件内核、自主 Agent 闭环与实战部署指南',
+    category: '客户端教程',
+    categorySlug: 'tutorials',
+    author: 'LT-博主',
+    date: '2026.11.08',
+    updatedDate: '2026-11-08',
+    platform: 'AI Agent 运行时',
+    region: '架构与避坑',
+    readTime: '11 分钟',
+    excerpt: '深度拆解 DeepSeek 官方开源 Agent 框架 Harness（dsh）：剖析基于 Cordis 的全插件化微内核、模型与工具解耦机制，以及多轮循环自愈闭环；附 CLI/Web 端实战部署与私有模型接入防踩坑手册。',
+    image: '/deepseek-harness-core.webp',
+    featured: true,
+    trending: true
+  },
   // 全网独家深度实测：神行加速
   {
     slug: 'shenxingjiasu-review',
