@@ -1,0 +1,38 @@
+# 白嫖博客 (baipiaojc.com) - 零成本试用与高性价比出海网络指南
+
+> 白嫖博客 (baipiaojc.com) 专注于零成本试用、免信用卡白嫖攻略、低门槛高性价比按量买断流量包精算及开源免费代理客户端指南。坚持客观实测、数据优先、严控试错成本。
+
+## 零成本试用与高性价比选购
+
+- [大佬云全套价格表与选购指南：19.99元月付、永久不限时包与换购避坑](https://baipiaojc.com/posts/dalaoyun-airport-guide): 深度精算 19.99 元低门槛月付方案与不限时按量买断包，弹性备用零浪费。
+- [榴莲云全套餐价格表：24元140GB月付、特惠年付与客服通用订阅领取](https://baipiaojc.com/posts/liulianyun-airport-guide): 针对移动/联通宽带晚高峰 QoS 调优，解析特惠年付与客服福利订阅。
+- [云界线全套餐价格表：22元150GB月付、跌破1元/GB不限时包与重置精算](https://baipiaojc.com/posts/yunjiexian-airport-guide): 首单折后实付 13.92 元，全系不限设备并发，不限时流量包每 GB 成本精算。
+- [闪电鼠全套餐价格表：22元120GB起、四端客户端与无通用订阅审计](https://baipiaojc.com/posts/shandianshu-airport-guide): 原生双 ISP 住宅出口纯净防风控，提供新手一键直连客户端方案。
+- [环球梯全套餐价格表：96元学生年付、轻享到尊享四档费率与设备上限解析](https://baipiaojc.com/posts/huanqiuti-airport-guide): 年付折合单月仅 8 元极低成本方案，覆盖多国小众低价订阅区。
+
+## 专线服务深度实测
+
+- [神行加速机场深度评测：新加坡原生家宽实测、246Mbps晚高峰吞吐与全套餐避坑指南](https://baipiaojc.com/posts/shenxingjiasu-review): 全 IPLC 专线晚高峰吞吐与家宽原生 IP 解锁 ChatGPT / Claude 实测。
+- [边缘节点购买路线图：15元体验包、98元年付与永久流量](https://baipiaojc.com/posts/bianyuan-node-airport-review): 拆解 15 元微型试水体验包与按量计费细则。
+- [快狸运行状态观察：15元轻量包、Clash Mi与抢修记录](https://baipiaojc.com/posts/kuaili-airport-review): 15 元轻量尝鲜包、轻量客户端接入与节点维护响应速度实录。
+- [飞V套餐拆账：月付150GB、99元年付与三档总量包](https://baipiaojc.com/posts/feiv-airport-review): 极致压缩体验门槛的经济型中转方案拆账解析。
+- [灵动云选购手册：20元月付、穿云年付和社群优惠核验](https://baipiaojc.com/posts/lingdongyun-airport-review): 原生支持 Hysteria 2 协议的高抗丢包方案与按量一次性流量包评测。
+
+## 免费开源客户端与白嫖配置教程
+
+- [美区 Apple ID 注册与安全充值完全指南：无需海外信用卡，纯白嫖保姆级实操](https://baipiaojc.com/posts/us-apple-id-registration-guide): 零成本免费注册美区账号，免绑定境外支付方式，支持安全下载 Shadowrocket（小火箭）与 Clash Mi。
+- [全平台保姆级教程：从客户端下载、机场订阅到连通性测试一站式通关](https://baipiaojc.com/posts/beginner-complete-guide): 梳理主流操作系统零基础接入全流程，彻底规避繁杂配置。
+- [安卓科学上网指南：v2rayNG 保姆级安装、订阅导入与分应用分流实测](https://baipiaojc.com/posts/v2rayng-android-tutorial): 安卓开源免翻墙下载，国内银行直连分流与后台长效保活。
+- [iOS 苹果科学上网指南：Shadowrocket（小火箭）安装、节点导入与规则配置](https://baipiaojc.com/posts/shadowrocket-ios-tutorial): 苹果生态主流工具安装指南，涵盖策略分流与广告拦截模块注入。
+- [Windows 电脑科学上网指南：Clash Verge Rev 安装配置、TUN 虚拟网卡与防断网实战](https://baipiaojc.com/posts/clash-verge-rev-windows-tutorial): 基于 Mihomo 内核的现代化免费客户端调教，系统代理与 TUN 模式详解。
+- [sing-box 是什么、怎么用：新一代全能网络核心全面解析与配置实战](https://baipiaojc.com/posts/sing-box-overview-and-setup): 纯 Go 开源极轻量通用代理核心，超低内存占用与二进制规则集实操。
+- [ChatGPT、Claude 与 Gemini 使用与故障排查：着重拆解 Claude 严苛风控封号机制](https://baipiaojc.com/posts/ai-chatgpt-claude-gemini-guide): 辨析机房 IP 与住宅家宽 IP，解决 Access Denied 报错与账号防封心得。
+
+## 在线诊断工具与精算
+
+- [DNS 泄露检测与修复完全指南](https://baipiaojc.com/posts/dns-leak-test-and-diagnostics): WebRTC、IPv6 与 DoH/DoT 隐私防护及在线权威诊断实操。
+- [满血 AI 测试指南：ChatGPT Plus、Claude 3.5 与 Gemini 节点原生解锁检测](https://baipiaojc.com/posts/ai-connectivity-unlock-test): 节点原生双栈与欺诈分检测，保障海外生产力工具稳定运行。
+- [在线与自建订阅转换完全指南](https://baipiaojc.com/posts/subconverter-online-guide): Clash / Sing-box / Surge / Shadowrocket 格式转换与防泄露实操。
+- [VPS 线路解释器：CN2 GIA、AS9929、CMIN2 跨境回程路由实测速查](https://baipiaojc.com/posts/vps-route-interpreter): 厘清骨干网路由级别，看懂真实海缆带宽成本。
+- [站点入口](https://baipiaojc.com/): 白嫖博客主页与文章归档导航。
+
