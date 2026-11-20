@@ -34,8 +34,9 @@ async function main() {
   const urls = await getUrls();
 
   const endpoints = [
-    { name: 'Bing IndexNow', url: 'https://www.bing.com/indexnow' },
-    { name: 'IndexNow API', url: 'https://api.indexnow.org/indexnow' }
+    { name: 'Yandex IndexNow', url: 'https://yandex.com/indexnow' },
+    { name: 'IndexNow API', url: 'https://api.indexnow.org/indexnow' },
+    { name: 'Bing IndexNow', url: 'https://www.bing.com/indexnow' }
   ];
 
   for (const ep of endpoints) {

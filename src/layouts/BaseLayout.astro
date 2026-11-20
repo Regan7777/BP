@@ -13,6 +13,7 @@ interface Props {
   canonicalUrl?: string;
   image?: string;
   type?: 'website' | 'article';
+  robots?: string;
   schemaJsonLd?: Record<string, any> | Array<Record<string, any>>;
 }
 
@@ -23,6 +24,7 @@ const {
   canonicalUrl,
   image = '/logo.png',
   type = 'website',
+  robots = 'index, follow, max-image-preview:large, max-snippet:-1',
   schemaJsonLd
 } = Astro.props;
 
@@ -43,7 +45,7 @@ const keywordsContent = Array.isArray(keywords) ? keywords.join(', ') : keywords
     <link rel="canonical" href={canonical} />
 
     <!-- Bing & Search Engine Crawler Directives (High CTR & Large Preview) -->
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+    <meta name="robots" content={robots} />
 
     <!-- AI Agent & LLM Context Discoverability -->
     <link rel="alternate" type="text/markdown" title="LLM Context" href="/llms.txt" />

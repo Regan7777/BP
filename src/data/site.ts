@@ -159,7 +159,7 @@ export const trendingArticles: Article[] = [
     platform: 'iOS / iPadOS',
     region: '小火箭配置',
     readTime: '9 分钟',
-    excerpt: '苹果手机翻墙首选工具：美区下载避坑、订阅导入与二维码扫描、全局路由选配规则模式与后台保活排错全流程图文实战。',
+    excerpt: '苹果手机科学上网首选工具教程：涵盖美区Apple ID安全下载防封、机场节点订阅导入与二维码扫描、全局路由规则分流选配及后台保活防断流排错全流程，图文详尽带你轻松搞定iPhone与iPad稳定翻墙。',
     image: '/shadowrocket-origami-rocket.webp',
     trending: true
   },
@@ -174,7 +174,7 @@ export const trendingArticles: Article[] = [
     platform: 'Windows 电脑',
     region: '内核与分流',
     readTime: '10 分钟',
-    excerpt: '新一代开源跨平台客户端安装、中文语言切换、通用订阅导入、规则分流与 TUN 虚拟网卡模式实战，彻底终结电脑游戏与独立软件不走代理的痛点。',
+    excerpt: '新一代开源跨平台客户端实战指南：涵盖Windows下Clash Verge Rev安装、中文语言切换、通用订阅一键导入、智能规则分流与TUN虚拟网卡驱动接管，彻底终结电脑游戏、Steam与独立软件不走代理的痛点。',
     image: '/clash-verge-cat-routing.webp',
     trending: true
   },
@@ -235,7 +235,7 @@ const airportRecommendationSeeds: AirportRecommendationSeed[] = [
     slug: 'dalaoyun-airport-guide', name: '大佬云',
     title: '大佬云全套价格表与选购指南：19.99元月付、永久不限时包与换购避坑',
     price: '¥19.99 / 月', region: '三种付费模型', readTime: '12 分钟',
-    excerpt: '完整整理大佬云六档周期套餐与99/199元永久不限时包；详解入群领体验包、四端通用订阅配置，以及换购覆盖原余量的高危条款。',
+    excerpt: '全面梳理2026大佬云六档周期套餐费率与99/199元闲云悠云永久不限时按量包，深度实操入群领体验包、四端通用订阅提取配置，并严谨核算换购覆盖原余量与七折优惠码适用范围的高危条款，助您精准避坑选型。',
     monthly: '19.99元/月起，100GB/月', clients: '专属客户端、Nextin (dly)、通用订阅',
     sourceUrl: 'https://zhiwang.one/posts/dalaoyun-review-2026/', sourceDate: '2026-10-21', officialImage: '/images/airports/dalaoyun-logo.webp', affiliatePath: '/go/dalaoyun',
     planRows: [
@@ -257,7 +257,7 @@ const airportRecommendationSeeds: AirportRecommendationSeed[] = [
     slug: 'liulianyun-airport-guide', name: '榴莲云',
     title: '榴莲云全套餐价格表：24元140GB月付、特惠年付与客服通用订阅领取',
     price: '¥24 / 月', region: '开通流程', readTime: '10 分钟',
-    excerpt: '全面拆解榴莲云五档周期套餐（轻享/畅享/尊享/榴莲王/特惠年付）；详解购买后向客服索取通用订阅全流程与退款注意事项。',
+    excerpt: '全面拆解榴莲云轻享、畅享、尊享、榴莲王与特惠年付等五档周期套餐费率体系，系统详解下单购买后向在线客服索取通用订阅链接全流程，并客观提示其全线无不限时包与退款审计注意事项，助您明明白白消费。',
     monthly: '24元/月起，140GB/月', clients: '四端专属客户端、Nextin (lly)、通用订阅',
     sourceUrl: 'https://zhiwang.one/posts/liulianyun-review-2026/', sourceDate: '2026-10-21', officialImage: '/images/airports/liulianyun-logo.webp', affiliatePath: '/go/liulianyun',
     planRows: [
@@ -278,7 +278,7 @@ const airportRecommendationSeeds: AirportRecommendationSeed[] = [
     slug: 'yunjiexian-airport-guide', name: '云界线',
     title: '云界线全套餐价格表：22元150GB月付、跌破1元/GB不限时包与重置精算',
     price: '¥22 / 月', region: '成本核算', readTime: '12 分钟',
-    excerpt: '实测拆解云界线实际结算价（轻云22元、凌云40元、御云66元）、99/199元永久不限时包（悠云每GB低至0.995元），以及重置费与升档精算。',
+    excerpt: '深入拆解云界线轻云22元、凌云40元与御云66元真实结算月费，深度测算99元闲云与199元悠云跌破1元/GB的永久不限时包性价比，严谨对比超量重置包与升档费率，拒绝套路，为您提供客观靠谱的选购参考。',
     monthly: '22元/月，150GB/月', clients: 'Windows专属客户端、Nextin (yjx)、通用订阅',
     sourceUrl: 'https://zhiwang.one/posts/yunjiexian-review-2026/', sourceDate: '2026-10-21', officialImage: '/images/airports/yunjiexian-logo.webp', affiliatePath: '/go/yunjiexian',
     planRows: [
@@ -299,7 +299,7 @@ const airportRecommendationSeeds: AirportRecommendationSeed[] = [
     slug: 'shandianshu-airport-guide', name: '闪电鼠',
     title: '闪电鼠全套餐价格表：22元120GB起、四端客户端与无通用订阅审计',
     price: '¥22 / 月', region: '设备适配审计', readTime: '10 分钟',
-    excerpt: '全面梳理闪电鼠四档全周期价格表（轻快/疾速/雷霆/年付小包）与四端专属客户端；明确其不支持通用订阅与软路由的适用边界。',
+    excerpt: '系统梳理闪电鼠轻快、疾速、雷霆与限时年付小包等四档全周期价格体系与四端专属客户端体验，深度核验其不支持通用订阅导入与软路由部署的适用边界，帮助习惯一键登录的新手用户客观评估是否值得入手。',
     monthly: '22元/月起，120GB/月', clients: '四端专属客户端；不支持通用订阅',
     sourceUrl: 'https://zhiwang.one/posts/shandianshu-review-2026/', sourceDate: '2026-10-21', officialImage: '/images/airports/shandianshu-logo.webp', affiliatePath: '/go/shandianshu',
     planRows: [
@@ -320,7 +320,7 @@ const airportRecommendationSeeds: AirportRecommendationSeed[] = [
     slug: 'huanqiuti-airport-guide', name: '环球梯',
     title: '环球梯全套餐价格表：96元学生年付、轻享到尊享四档费率与设备上限解析',
     price: '¥23 / 月', region: '商家声明核验', readTime: '10 分钟',
-    excerpt: '完整呈现环球梯全周期价格矩阵、设备上限（3~10台）、流量重置包与365天按量包；破除不限时误区，解析四端客户端使用。',
+    excerpt: '完整呈现环球梯全周期价格矩阵、3至10台设备并发上限、重置包费率及99元/299元按量包，深度破除按量包365天有效期而非永久不限时的认知误区，全面解析四端专属客户端使用体验与退款规则。',
     monthly: '23元/月起，120GB/月', clients: '四端专属客户端；不支持通用订阅',
     sourceUrl: 'https://zhiwang.one/posts/huanqiuti-review-2026/', sourceDate: '2026-10-21', officialImage: '/images/airports/huanqiuti-logo.webp', affiliatePath: '/go/huanqiuti',
     planRows: [
@@ -345,7 +345,7 @@ const airportReviewSeeds: AirportRecommendationSeed[] = [
     slug: 'bianyuan-node-airport-review', name: '边缘节点',
     title: '边缘节点购买路线图：15元体验包、98元年付与永久流量',
     price: '¥15 / 月', region: '三条购买路线', readTime: '11 分钟',
-    excerpt: '从小额验证、全年轻量和低频备用三条路线选择边缘节点，并把专属客户端作为价格比较前的一票否决项。',
+    excerpt: '从15元小额验证体验包、98元年付小包与永久不限时按量包三条选型路线拆解边缘节点真实表现，重点把必须使用专属客户端且不支持第三方通用订阅作为关键选购前提，为您呈现透明客观的购买决策路线图。',
     monthly: '15元/月，50GB/月', clients: 'Windows、macOS、Android专属客户端；iOS Nextin；不支持通用订阅',
     sourceUrl: 'https://zhiwang.one/posts/bianyuan-review-2026/', sourceDate: '2026-10-21', affiliatePath: '/go/bianyuan',
     planRows: [
@@ -364,7 +364,7 @@ const airportReviewSeeds: AirportRecommendationSeed[] = [
     slug: 'kuaili-airport-review', name: '快狸',
     title: '快狸运行状态观察：15元轻量包、Clash Mi与抢修记录',
     price: '¥15 / 月', region: '状态优先核验', readTime: '11 分钟',
-    excerpt: '先检查官网、控制台、公告和订阅是否恢复，再讨论六档周期套餐；同时单独验证Clash Mi格式，避免用旧评测替代当前状态。',
+    excerpt: '聚焦快狸运行状态与可用性核验：全面梳理15元月狸轻量包、森狸年付与Clash Mi通用订阅格式，重点核查官方公告与节点服务恢复现状，避免用历史旧评测替代当前真实情况，助您稳妥避开停服与故障风险。',
     monthly: '15元/月，50GB/月', clients: 'Windows、macOS、Android专属客户端；iOS Nextin；Clash Mi 通用订阅',
     sourceUrl: 'https://zhiwang.one/posts/kuaili-review-2026/', sourceDate: '2026-10-21', affiliatePath: '/go/kuaili',
     planRows: [
@@ -383,7 +383,7 @@ const airportReviewSeeds: AirportRecommendationSeed[] = [
     slug: 'feiv-airport-review', name: '飞V',
     title: '飞V套餐拆账：月付150GB、99元年付与三档总量包',
     price: '¥22 / 月', region: '三钱包预算', readTime: '12 分钟',
-    excerpt: '把飞V月付、年付和终身总量包拆成三个预算钱包，在全套餐不退款前提下，用真实使用频率判断而不是追逐买断标签。',
+    excerpt: '将飞V月付150GB入门档、99元年付轻量版与终身不限时买断包拆分为三个独立的预算钱包，在全套餐不接受退款的前提下，指导用户根据真实出海网络使用频率与客户端支持情况理性选型，拒绝盲目跟风买断。',
     monthly: '22元/月，150GB/月', clients: 'Windows、macOS、Android专属客户端；iOS Nextin；不支持通用订阅',
     sourceUrl: 'https://zhiwang.one/posts/feiv-review-2026/', sourceDate: '2026-10-21', affiliatePath: '/go/feiv',
     planRows: [
@@ -402,7 +402,7 @@ const airportReviewSeeds: AirportRecommendationSeed[] = [
     slug: 'lingdongyun-airport-review', name: '灵动云',
     title: '灵动云选购手册：20元月付、穿云年付和社群优惠核验',
     price: '¥20 / 月', region: '频率与优惠核验', readTime: '12 分钟',
-    excerpt: '按持续日用、全年轻量和间歇备用划分灵动云套餐，并把Telegram活动从“看到代码”追踪到“订单实际减价”。',
+    excerpt: '按持续日用拂风、穿云年付小包与永久有效总量包等三大维度系统划分灵动云套餐梯队，全面实测四端专属客户端连接体验，并教你追踪Telegram官方社群优惠活动在订单结算时的真实减免，客观防坑选购。',
     monthly: '20元/月，100GB/月', clients: 'Windows、macOS、Android专属客户端；iOS Nextin；不支持通用订阅',
     sourceUrl: 'https://zhiwang.one/posts/lingdongyun-review-2026/', sourceDate: '2026-10-21', affiliatePath: '/go/lingdongyun',
     planRows: [
@@ -449,7 +449,7 @@ const rawArticles: Article[] = [
     price: '¥23 / 月',
     region: '新加坡家宽 / IPLC',
     readTime: '12 分钟',
-    excerpt: '全网首发神行加速真实链路压测：20:37 黄金晚高峰 Cloudflare 实测下行稳跑 246Mbps、上行 136Mbps，新加坡 Private Customer (AS401243) 纯净家庭宽带 IP，风控值 25% 绿标通杀 ChatGPT/Claude；深度核验月付 23元/150GB、年付 96元（折8元/月）及 90GB 不限时包真实退款与领取规则。',
+    excerpt: '全网首发神行加速真实链路压测：晚高峰实测下行稳跑 246Mbps、上行 136Mbps，新加坡纯净家庭宽带 IP，风控值 25% 绿标通杀 ChatGPT/Claude；深度核验月付 23元/150GB、年付 96元及 90GB 不限时包真实退款与领取规则。',
     image: '/images/airports/shenxing-logo.webp',
     affiliatePath: '/go/shenxing',
     score: '9.4',
@@ -511,7 +511,7 @@ const rawArticles: Article[] = [
     platform: '全平台通用',
     region: '新手通关',
     readTime: '12 分钟',
-    excerpt: '完全零技术门槛大白话讲透科学上网：自研一键客户端与开源工具选型、订阅一键导入、规则模式分流防坑指南，更有 10 大高频排错问答彻底打通外网。',
+    excerpt: '完全零门槛大白话讲透跨平台科学上网：自研一键客户端与开源开源代理工具选型、机场订阅链接一键导入、分流规则模式设置避坑指南，更有10大高频连接故障与DNS污染排错方案，手把手带新手一站式打通海外网络。',
     image: '/guide-hero.webp',
     featured: true,
     trending: true
@@ -528,7 +528,7 @@ const rawArticles: Article[] = [
     platform: 'Android 安卓',
     region: '轻量客户端',
     readTime: '8 分钟',
-    excerpt: '从 GitHub 官方原版鉴别、订阅链接一键导入到分应用代理深度设置，手把手带你配置最省电轻量的安卓翻墙主力工具。',
+    excerpt: '安卓科学上网保姆级实操指南：从GitHub官方正版客户端识别、机场通用订阅一键导入到分应用代理深度配置，手把手带你调优最省电、最轻量稳定的安卓出海主力工具，彻底解决手机连不上与后台被杀问题。',
     image: '/v2rayng-routing-v.webp',
     featured: true
   },
@@ -543,7 +543,7 @@ const rawArticles: Article[] = [
     platform: 'iOS / iPadOS',
     region: '小火箭配置',
     readTime: '9 分钟',
-    excerpt: '苹果手机翻墙首选工具：美区下载避坑、订阅导入与二维码扫描、全局路由选配规则模式与后台保活排错全流程图文实战。',
+    excerpt: '苹果手机科学上网首选工具教程：涵盖美区Apple ID安全下载防封、机场节点订阅导入与二维码扫描、全局路由规则分流选配及后台保活防断流排错全流程，图文详尽带你轻松搞定iPhone与iPad稳定翻墙。',
     image: '/shadowrocket-origami-rocket.webp'
   },
   {
@@ -557,7 +557,7 @@ const rawArticles: Article[] = [
     platform: 'Windows 电脑',
     region: '内核与分流',
     readTime: '10 分钟',
-    excerpt: '新一代开源跨平台客户端安装、中文语言切换、通用订阅导入、规则分流与 TUN 虚拟网卡模式实战，彻底终结电脑游戏与独立软件不走代理的痛点。',
+    excerpt: '新一代开源跨平台客户端实战指南：涵盖Windows下Clash Verge Rev安装、中文语言切换、通用订阅一键导入、智能规则分流与TUN虚拟网卡驱动接管，彻底终结电脑游戏、Steam与独立软件不走代理的痛点。',
     image: '/clash-verge-cat-routing.webp',
     trending: true
   },
@@ -600,7 +600,7 @@ const rawArticles: Article[] = [
     platform: '全客户端通用',
     region: '分流模式',
     readTime: '7 分钟',
-    excerpt: '彻底搞懂三大路由模式底层机制：规则模式实现国内免翻海外出海智能调度；为什么千万不要日常常驻全局模式；何时切换全局模式救急冷门外网。',
+    excerpt: '彻底搞懂代理客户端三大核心分流模式底层运作原理：深入解析规则模式如何实现国内免翻与海外出海的智能调度，为什么日常千万不要常驻全局模式，以及在何种网络阻断异常下切换全局模式紧急救急，助您告别网络卡顿。',
     image: '/proxy-modes-gate.webp'
   },
   {
@@ -643,7 +643,7 @@ const rawArticles: Article[] = [
     platform: '即时通讯',
     region: '通讯防封',
     readTime: '9 分钟',
-    excerpt: '海外首选隐私通讯软件使用通关：正版官网下载防木马、一键官方中文汉化、+86 中国手机号限制私聊官方 SpamBot 秒级申诉解封、两步验证开启与防骗黄金法则。',
+    excerpt: '海外首选隐私通讯软件使用完全通关手册：官方正版客户端下载防木马钓鱼、一键官方中文汉化包安装、+86中国手机号解除私聊限制的SpamBot官方申诉全流程，以及两步验证安全防盗号与防诈骗实战黄金法则。',
     image: '/telegram-safe-flight.webp'
   },
   {
@@ -701,12 +701,12 @@ const rawArticles: Article[] = [
     platform: '本地离线',
     region: '语法校验',
     readTime: '7 分钟',
-    excerpt: '解析 Clash YAML 语法缩进、Sing-box JSON 结构与 Base64 订阅编码异常，提供本地离线校验工具与语法查错指南，彻底终结格式错误。',
+    excerpt: '系统剖析代理配置文件常见语法报错：深入解析Clash YAML层级缩进、Sing-box JSON标点结构与Base64订阅解码异常，提供纯本地离线校验工具与语法自检指南，保障数据隐私不泄露，彻底终结导入格式错误。',
     image: '/local-format-inspection.webp'
   },
   {
     slug: 'subconverter-online-guide',
-    title: '在线与自建订阅转换完全指南：Clash / Sing-box / Surge / Shadowrocket 规则转换与防泄露',
+    title: '在线与自建订阅转换指南：Clash、Sing-box 与小火箭规则转换与防泄露',
     category: '实用工具',
     categorySlug: 'tools',
     author: 'LT-博主',
@@ -734,7 +734,7 @@ const rawArticles: Article[] = [
   },
   {
     slug: 'ai-connectivity-unlock-test',
-    title: '满血 AI 测试指南：ChatGPT Plus、Claude 3.5 Sonnet 与 Gemini 节点原生解锁与延迟检测',
+    title: '满血 AI 测速指南：ChatGPT Plus、Claude 与 Gemini 节点原生解锁与延迟实测',
     category: '实用工具',
     categorySlug: 'tools',
     author: 'LT-博主',
@@ -771,7 +771,7 @@ const rawArticles: Article[] = [
     platform: 'CDN 优选',
     region: '极速解析',
     readTime: '10 分钟',
-    excerpt: '利用开源测速工具快速测算 Cloudflare Anycast 全球 CDN 节点在本地宽带下的实际丢包与延迟，筛选低延迟直连 IP 赋能代理节点提速。',
+    excerpt: '利用开源CloudflareSpeedTest测速工具快速测算Cloudflare Anycast全球CDN节点在本地宽带环境下的丢包率与下行带宽，教你精准筛选出低延迟优质直连IP，赋能节点与自建代理实现极速加载提速。',
     image: '/cloudflare-edge-path.webp'
   }
 ];
@@ -780,22 +780,22 @@ export const categories = [
   {
     slug: 'recommendations',
     name: '机场推荐',
-    description: '涵盖高性价比、专线中继、小众冷门等不同梯度的机场选购指南。'
+    description: '2026优质稳定翻墙机场推荐指南：综合考量节点网络冗余、晚高峰抗抖动能力、流媒体原生解锁与性价比，严选优质BGP中转与IPLC高速专线，拒绝商业充钱虚假宣传，为您呈现客观权威的高分选型指南。'
   },
   {
     slug: 'reviews',
     name: '机场评测',
-    description: '晚高峰 4K 测速、BGP/IPLC 线路架构拆解与抗封锁真实测试。'
+    description: '真实网络环境下的深度长文评测档案：覆盖各大主流机场的节点延迟、丢包率、晚高峰8K吞吐、节点拓扑架构拆解与退款防跑路机制审计，坚持纯真实数据驱动与客观独立立场，助您避坑排雷。'
   },
   {
     slug: 'tutorials',
     name: '客户端教程',
-    description: '厘清内核与分流逻辑，理顺跨平台科学上网的操作脉络。'
+    description: '跨平台科学上网保姆级实操指南：全面系统剖析Windows、macOS、iOS与Android端主流客户端（Clash Verge、Sing-box、Shadowrocket、v2rayNG）的订阅导入、分流规则优化与高频故障排错。'
   },
   {
     slug: 'tools',
     name: '实用工具',
-    description: '网络排查、协议调试、订阅转换与在线检测实用工具箱。'
+    description: '高效轻量的网络链路与协议诊断工具箱：汇聚单线程/多线程测速、Subconverter订阅转换防泄露、YAML/JSON语法格式校验、VPS路由回程测试与DNS污染排查，助您秒级排查连通性异常。'
   }
 ];
 

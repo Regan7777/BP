@@ -4,3 +4,4 @@ Disallow: /go/
 
 # Sitemap
 Sitemap: https://baipiaojc.com/sitemap.xml
+Sitemap: https://baipiaojc.com/sitemap-0.xml

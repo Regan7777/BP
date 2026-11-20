@@ -9,6 +9,7 @@
     "preview": "astro preview",
     "preview:static": "node scripts/serve-dist.cjs",
     "audit": "node scripts/audit-site.cjs",
+    "audit:seo": "node scripts/audit-seo.cjs",
     "audit:external": "node scripts/check-external-links.cjs",
     "optimize:images": "node scripts/optimize-site-images.cjs && node scripts/optimize-airport-images.cjs",
     "indexnow": "node scripts/submit-indexnow.cjs"
