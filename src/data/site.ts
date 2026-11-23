@@ -449,7 +449,7 @@ const rawArticles: Article[] = [
     price: '¥23 / 月',
     region: '新加坡家宽 / IPLC',
     readTime: '12 分钟',
-    excerpt: '全网首发神行加速真实链路压测：晚高峰实测下行稳跑 246Mbps、上行 136Mbps，新加坡纯净家庭宽带 IP，风控值 25% 绿标通杀 ChatGPT/Claude；深度核验月付 23元/150GB、年付 96元及 90GB 不限时包真实退款与领取规则。',
+    excerpt: '全网首发神行加速真实链路压测：20:37 黄金晚高峰 Cloudflare 实测下行稳跑 246Mbps、上行 136Mbps，新加坡 Private Customer (AS401243) 纯净家庭宽带 IP，风控值 25% 绿标通杀 ChatGPT/Claude；深度核验月付 23元/150GB、年付 96元（折8元/月）及 90GB 不限时包真实退款与领取规则。',
     image: '/images/airports/shenxing-logo.webp',
     affiliatePath: '/go/shenxing',
     score: '9.4',
@@ -706,7 +706,7 @@ const rawArticles: Article[] = [
   },
   {
     slug: 'subconverter-online-guide',
-    title: '在线与自建订阅转换指南：Clash、Sing-box 与小火箭规则转换与防泄露',
+    title: '在线与自建订阅转换完全指南：Clash / Sing-box / Surge / Shadowrocket 规则转换与防泄露',
     category: '实用工具',
     categorySlug: 'tools',
     author: 'LT-博主',
@@ -734,7 +734,7 @@ const rawArticles: Article[] = [
   },
   {
     slug: 'ai-connectivity-unlock-test',
-    title: '满血 AI 测速指南：ChatGPT Plus、Claude 与 Gemini 节点原生解锁与延迟实测',
+    title: '满血 AI 测试指南：ChatGPT Plus、Claude 3.5 Sonnet 与 Gemini 节点原生解锁与延迟检测',
     category: '实用工具',
     categorySlug: 'tools',
     author: 'LT-博主',
