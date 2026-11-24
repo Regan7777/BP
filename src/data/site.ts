@@ -84,6 +84,7 @@ export type Article = {
   sections?: ArticleSection[];
   faq?: FaqItem[];
   relatedSlugs?: string[];
+  hiddenInReviews?: boolean;
 };
 
 export type NavSubItem = {
@@ -226,6 +227,7 @@ type AirportRecommendationSeed = {
   affiliatePath?: string;
   planRows: string[][];
   risks: Array<{ tag: string; title: string; content: string }>;
+  hiddenInReviews?: boolean;
 };
 
 // 资料口径：以下五家仅整理 zhiwang.one 已记录的套餐、客户端与风险条款，
@@ -344,6 +346,7 @@ const airportReviewSeeds: AirportRecommendationSeed[] = [
   {
     slug: 'bianyuan-node-airport-review', name: '边缘节点',
     title: '边缘节点购买路线图：15元体验包、98元年付与永久流量',
+    hiddenInReviews: true,
     price: '¥15 / 月', region: '三条购买路线', readTime: '11 分钟',
     excerpt: '从15元小额验证体验包、98元年付小包与永久不限时按量包三条选型路线拆解边缘节点真实表现，重点把必须使用专属客户端且不支持第三方通用订阅作为关键选购前提，为您呈现透明客观的购买决策路线图。',
     monthly: '15元/月，50GB/月', clients: 'Windows、macOS、Android专属客户端；iOS Nextin；不支持通用订阅',
@@ -363,6 +366,7 @@ const airportReviewSeeds: AirportRecommendationSeed[] = [
   {
     slug: 'kuaili-airport-review', name: '快狸',
     title: '快狸运行状态观察：15元轻量包、Clash Mi与抢修记录',
+    hiddenInReviews: true,
     price: '¥15 / 月', region: '状态优先核验', readTime: '11 分钟',
     excerpt: '聚焦快狸运行状态与可用性核验：全面梳理15元月狸轻量包、森狸年付与Clash Mi通用订阅格式，重点核查官方公告与节点服务恢复现状，避免用历史旧评测替代当前真实情况，助您稳妥避开停服与故障风险。',
     monthly: '15元/月，50GB/月', clients: 'Windows、macOS、Android专属客户端；iOS Nextin；Clash Mi 通用订阅',
@@ -475,7 +479,8 @@ const rawArticles: Article[] = [
     sourceName: `织网 · ${seed.name}资料页`,
     sourceCheckedAt: seed.sourceDate,
     score: '资料核对',
-    trending: true
+    trending: true,
+    hiddenInReviews: seed.hiddenInReviews
   })),
 
   ...airportReviewSeeds.map((seed) => ({
@@ -496,7 +501,8 @@ const rawArticles: Article[] = [
     sourceName: `织网 · ${seed.name}资料页`,
     sourceCheckedAt: seed.sourceDate,
     score: '资料核对',
-    trending: true
+    trending: true,
+    hiddenInReviews: seed.hiddenInReviews
   })),
 
   // 核心置顶通关总纲教程

@@ -13,8 +13,6 @@
 ## 专线服务深度实测
 
 - [神行加速机场深度评测：新加坡原生家宽实测、246Mbps晚高峰吞吐与全套餐避坑指南](https://baipiaojc.com/posts/shenxingjiasu-review): 全 IPLC 专线晚高峰吞吐与家宽原生 IP 解锁 ChatGPT / Claude 实测。
-- [边缘节点购买路线图：15元体验包、98元年付与永久流量](https://baipiaojc.com/posts/bianyuan-node-airport-review): 拆解 15 元微型试水体验包与按量计费细则。
-- [快狸运行状态观察：15元轻量包、Clash Mi与抢修记录](https://baipiaojc.com/posts/kuaili-airport-review): 15 元轻量尝鲜包、轻量客户端接入与节点维护响应速度实录。
 - [飞V套餐拆账：月付150GB、99元年付与三档总量包](https://baipiaojc.com/posts/feiv-airport-review): 极致压缩体验门槛的经济型中转方案拆账解析。
 - [灵动云选购手册：20元月付、穿云年付和社群优惠核验](https://baipiaojc.com/posts/lingdongyun-airport-review): 原生支持 Hysteria 2 协议的高抗丢包方案与按量一次性流量包评测。
 

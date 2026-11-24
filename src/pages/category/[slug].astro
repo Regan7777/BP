@@ -10,8 +10,8 @@ export function getStaticPaths() {
     let categoryArticles = articles.filter((article) => article.categorySlug === category.slug);
 
     if (category.slug === 'reviews') {
-      // 所有已配置官网入口的机场文章，都归入机场评测列表。
-      categoryArticles = articles.filter((article) => Boolean(article.affiliatePath));
+      // 所有已配置官网入口的机场文章，都归入机场评测列表（隐藏已标记文章）。
+      categoryArticles = articles.filter((article) => Boolean(article.affiliatePath) && !article.hiddenInReviews);
     }
 
     if (category.slug === 'recommendations') {

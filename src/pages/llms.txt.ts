@@ -4,7 +4,7 @@ import { articles, categories, siteConfig } from '../data/site';
 export const GET: APIRoute = () => {
   const categoryBlocks = categories.map((category) => {
     const rows = articles
-      .filter((article) => article.categorySlug === category.slug)
+      .filter((article) => article.categorySlug === category.slug && !article.hiddenInReviews)
       .map((article) => `- [${article.title}](${siteConfig.url}/posts/${article.slug})`)
       .join('\n');
 
