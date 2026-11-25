@@ -453,7 +453,7 @@ const rawArticles: Article[] = [
     price: '¥23 / 月',
     region: '新加坡家宽 / IPLC',
     readTime: '12 分钟',
-    excerpt: '全网首发神行加速真实链路压测：20:37 黄金晚高峰 Cloudflare 实测下行稳跑 246Mbps、上行 136Mbps，新加坡 Private Customer (AS401243) 纯净家庭宽带 IP，风控值 25% 绿标通杀 ChatGPT/Claude；深度核验月付 23元/150GB、年付 96元（折8元/月）及 90GB 不限时包真实退款与领取规则。',
+    excerpt: '神行加速真实链路压测：20:37晚高峰Cloudflare实测下行246Mbps、上行136Mbps，新加坡AS401243纯净家宽IP，风控25%绿标解锁ChatGPT/Claude；核验月付23元150GB、年付96元及90GB不限时包退款规则。',
     image: '/images/airports/shenxing-logo.webp',
     affiliatePath: '/go/shenxing',
     score: '9.4',
@@ -712,7 +712,7 @@ const rawArticles: Article[] = [
   },
   {
     slug: 'subconverter-online-guide',
-    title: '在线与自建订阅转换完全指南：Clash / Sing-box / Surge / Shadowrocket 规则转换与防泄露',
+    title: '在线与自建订阅转换指南：Clash/Sing-box/Surge规则转换与防泄露',
     category: '实用工具',
     categorySlug: 'tools',
     author: 'LT-博主',
@@ -740,7 +740,7 @@ const rawArticles: Article[] = [
   },
   {
     slug: 'ai-connectivity-unlock-test',
-    title: '满血 AI 测试指南：ChatGPT Plus、Claude 3.5 Sonnet 与 Gemini 节点原生解锁与延迟检测',
+    title: '满血AI测试指南：ChatGPT Plus、Claude与Gemini原生解锁与延迟检测',
     category: '实用工具',
     categorySlug: 'tools',
     author: 'LT-博主',
@@ -786,22 +786,26 @@ export const categories = [
   {
     slug: 'recommendations',
     name: '机场推荐',
-    description: '2026优质稳定翻墙机场推荐指南：综合考量节点网络冗余、晚高峰抗抖动能力、流媒体原生解锁与性价比，严选优质BGP中转与IPLC高速专线，拒绝商业充钱虚假宣传，为您呈现客观权威的高分选型指南。'
+    seoTitle: '2026优质翻墙机场推荐排行榜：BGP中转与IPLC专线实测高分选型指南｜biaopiao',
+    description: '2026优质稳定翻墙机场推荐指南：综合考量多入口BGP中转与IPLC高速专线冗余、晚高峰抗抖动表现、Netflix与ChatGPT原生解锁能力及月付性价比，严选神行加速等靠谱高分服务，拒绝商业充钱虚假宣传，为您呈现客观透明、可按月低成本试错的科学上网权威选型榜单与日常避坑实用方案。'
   },
   {
     slug: 'reviews',
     name: '机场评测',
-    description: '真实网络环境下的深度长文评测档案：覆盖各大主流机场的节点延迟、丢包率、晚高峰8K吞吐、节点拓扑架构拆解与退款防跑路机制审计，坚持纯真实数据驱动与客观独立立场，助您避坑排雷。'
+    seoTitle: '2026机场评测中心：晚高峰节点测速、线路架构拆解与防跑路深度实测档案｜biaopiao',
+    description: '真实网络环境下的2026主流翻墙机场深度长文评测档案：全面覆盖节点延迟抖动、晚高峰8K流媒体吞吐实测、IPLC/IEPL线路拓扑架构拆解、多设备并发限制以及退款防跑路条款审计。坚持纯真实硬件数据驱动与客观独立立场，助您深度对比各家优缺点，彻底避开虚假测速与跑路陷阱风险。'
   },
   {
     slug: 'tutorials',
     name: '客户端教程',
-    description: '跨平台科学上网保姆级实操指南：全面系统剖析Windows、macOS、iOS与Android端主流客户端（Clash Verge、Sing-box、Shadowrocket、v2rayNG）的订阅导入、分流规则优化与高频故障排错。'
+    seoTitle: '2026科学上网客户端配置教程：Clash Verge、Sing-box与小火箭实战指南｜biaopiao',
+    description: '跨平台科学上网保姆级实操配置指南：全面系统剖析Windows、macOS、iOS与Android主流客户端（Clash Verge Rev、Sing-box、Shadowrocket小火箭、v2rayNG）的订阅链接导入、TUN虚拟网卡开启、分流规则优化及常见断流报错排错全流程，助您零基础快速上手。'
   },
   {
     slug: 'tools',
     name: '实用工具',
-    description: '高效轻量的网络链路与协议诊断工具箱：汇聚单线程/多线程测速、Subconverter订阅转换防泄露、YAML/JSON语法格式校验、VPS路由回程测试与DNS污染排查，助您秒级排查连通性异常。'
+    seoTitle: '2026科学上网实用工具箱：订阅转换防泄露、节点测速与DNS污染排查指南｜biaopiao',
+    description: '高效轻量的网络链路与代理协议诊断工具箱：汇聚单线程/多线程带宽测速、Subconverter订阅转换防Token泄露、Clash YAML与Sing-box JSON本地格式校验、VPS三网回程路由溯源及本地DNS污染排查方案，助您秒级定位并解决各类外网连通性异常与配置故障问题。'
   }
 ];
 
