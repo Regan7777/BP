@@ -32,5 +32,6 @@
 - [满血 AI 测试指南：ChatGPT Plus、Claude 3.5 与 Gemini 节点原生解锁检测](https://baipiaojc.com/posts/ai-connectivity-unlock-test): 节点原生双栈与欺诈分检测，保障海外生产力工具稳定运行。
 - [在线与自建订阅转换完全指南](https://baipiaojc.com/posts/subconverter-online-guide): Clash / Sing-box / Surge / Shadowrocket 格式转换与防泄露实操。
 - [VPS 线路解释器：CN2 GIA、AS9929、CMIN2 跨境回程路由实测速查](https://baipiaojc.com/posts/vps-route-interpreter): 厘清骨干网路由级别，看懂真实海缆带宽成本。
+- [SRS与MRS二进制规则集实战指南：Mihomo与sing-box分流提速与防误杀](https://baipiaojc.com/posts/srs-mrs-ruleset-routing-guide): 对比传统 GeoSite 与新一代二进制规则集内存开销及匹配性能，提供防误杀与软路由调优配置。
 - [站点入口](https://baipiaojc.com/): 白嫖博客主页与文章归档导航。
 

@@ -779,6 +779,20 @@ const rawArticles: Article[] = [
     readTime: '10 分钟',
     excerpt: '利用开源CloudflareSpeedTest测速工具快速测算Cloudflare Anycast全球CDN节点在本地宽带环境下的丢包率与下行带宽，教你精准筛选出低延迟优质直连IP，赋能节点与自建代理实现极速加载提速。',
     image: '/cloudflare-edge-path.webp'
+  },
+  {
+    slug: 'srs-mrs-ruleset-routing-guide',
+    title: 'SRS与MRS二进制规则集实战指南：Mihomo与sing-box分流提速与防误杀',
+    category: '实用工具',
+    categorySlug: 'tools',
+    author: 'LT-博主',
+    date: '2026.11.25',
+    updatedDate: '2026-11-25',
+    platform: 'Rule-Set',
+    region: '分流加速',
+    readTime: '12 分钟',
+    excerpt: '2026代理规则集实战指南：深度对比传统GeoSite与新一代SRS/MRS二进制规则集在内存占用与匹配速度上的核心差异，手把手教你配置Mihomo与sing-box高速分流规则，彻底解决国内网银误代理、规则更新失败与路由器内存溢出问题。',
+    image: '/cloudflare-edge-path.webp'
   }
 ];
 

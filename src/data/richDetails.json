@@ -4616,6 +4616,130 @@
         "ai-connectivity-unlock-test",
         "beginner-complete-guide"
       ]
+    },
+    "srs-mrs-ruleset-routing-guide": {
+      "directAnswer": "传统 GeoIP.dat / GeoSite.dat 全量规则数据库动辄占用 60~120MB 内存，极易拖垮软路由和手机后台。改用 sing-box 的 .srs 或 Mihomo 的 .mrs 二进制规则集后，内存占用可骤降至 5MB 以内，且前缀树毫秒级命中，大幅减少国内网银、政企网站误走代理的卡顿故障。",
+      "keywords": [
+        "SRS规则集",
+        "MRS规则集",
+        "Mihomo分流规则",
+        "sing-box规则集",
+        "GeoSite替代"
+      ],
+      "prosAndCons": {
+        "prosTitle": "二进制规则集实测优势 (Pros)",
+        "pros": [
+          "内存占用锐减：从动辄数十 MB 的全量 GeoSite 压缩至 1~4MB 按需加载，低配路由器稳定不重启",
+          "按模块独立更新：国内直连、AI 服务、流媒体拆分更新，避免全量规则下载失败导致断网",
+          "匹配性能提升：编译后的前缀树与区间检索结构几乎零 CPU 抖动，首包分流无感响应"
+        ],
+        "consTitle": "迁移维护注意事项 (Cons)",
+        "cons": [
+          "跨内核不通用：sing-box 仅识别 .srs 格式，Mihomo（Clash.Meta）仅识别 .mrs 格式，混用会直接报错",
+          "依赖远程拉取通道：首次下载 GitHub 托管的规则文件需先确保代理可用或改用镜像源"
+        ]
+      },
+      "sections": [
+        {
+          "id": "section-1",
+          "num": 1,
+          "title": "为什么传统 GeoSite / GeoIP 数据库正在被淘汰？",
+          "lead": "全量加载百万级域名与 IP 段不仅浪费内存，还经常因为一个规则更新失败拖垮整个代理核心。",
+          "paragraphs": [
+            "早期 Clash 与 V2Ray 客户端依赖单一庞大的 GeoIP.dat 和 GeoSite.dat 文件，每次启动核心都必须把全球国家与地区的所有域名、CIDR 网段全部反序列化进内存。在 OpenWrt 软路由或 4GB 内存移动设备上，仅规则库就可能吃掉 80MB 以上运存。",
+            "此外，如果你只需要区分“国内直连”和“AI/流媒体走代理”，把全球两百多个国家和冷门广告域名全加载进来完全是冗余开销。了解不同分流模式的基础逻辑请参考 <a href=\"/posts/proxy-modes-comparison\">规则模式、全局模式与直连模式深度解析</a>。"
+          ],
+          "table": {
+            "headers": ["对比维度", "传统 GeoIP / GeoSite (.dat)", "sing-box Rule-Set (.srs)", "Mihomo Rule-Provider (.mrs)"],
+            "rows": [
+              ["存储结构", "全量 Protobuf 打包文件", "按分类拆分的二进制规则集", "按分类编译的二进制行为树"],
+              ["常驻内存占用", "约 50MB - 120MB", "约 2MB - 6MB", "约 2MB - 8MB"],
+              ["适用核心", "老版 Clash / v2ray-core", "sing-box 1.8.0+ / Hiddify / Karing", "Mihomo / Clash Verge Rev / Clash Mi"],
+              ["局部热更新", "不支持，必须整包覆盖", "支持按单个规则集定时拉取", "支持按 interval 秒级热更新"]
+            ]
+          }
+        },
+        {
+          "id": "section-2",
+          "num": 2,
+          "title": "SRS 与 MRS 二进制规则集的底层工作原理",
+          "lead": "把文本域名和 CIDR 提前编译为紧凑二进制结构，省去每次启动时的正则与字符串解析。",
+          "paragraphs": [
+            "无论是 sing-box 的 .srs 还是 Mihomo 的 .mrs，本质都是将成千上万条纯文本规则（如 DOMAIN-SUFFIX、IP-CIDR）预先编译为紧凑的前缀压缩树（Succinct Trie）或有序 IP 区间表。",
+            "客户端启动时直接以内存映射或二进制流读入即可投入匹配，不再消耗宝贵的 CPU 进行逐行文本解析。具体两个核心的部署差异可延伸查阅 <a href=\"/posts/sing-box-overview-and-setup\">sing-box 全面解析与配置实战</a> 与 <a href=\"/posts/clash-verge-rev-windows-tutorial\">Windows Clash Verge Rev 安装配置实战</a>。"
+          ]
+        },
+        {
+          "id": "section-3",
+          "num": 3,
+          "title": "Mihomo 端 MRS 规则集高稳配置范式",
+          "lead": "按“广告拦截 -> AI 专属 -> 流媒体 -> 国内直连 -> 兜底代理”顺序编排，彻底告别误杀。",
+          "paragraphs": [
+            "在 Mihomo（Clash Verge Rev / Clash Mi）的 rule-providers 字段中，将 behavior 指定为 domain 或 ipcidr，并设置 format: mrs，即可启用二进制加速。强烈建议对国内网银、政企及常见 CDN 域名保留独立白名单规则组放在最前。",
+            "很多用户开启分流后发现国内 App 加载转圈，往往是误把国内域名放到了需要走远程 DNS 解析的规则之后，触发了不必要的查询等待。完整 DNS 防污染与分流自查请配合 <a href=\"/posts/dns-leak-test-and-diagnostics\">DNS 泄露检测与修复完全指南</a> 一起核对。"
+          ]
+        },
+        {
+          "id": "section-4",
+          "num": 4,
+          "title": "sing-box 端 SRS 规则集分流与 GeoIP 迁移",
+          "lead": "从 sing-box 1.12 起官方彻底移除内置 GeoIP/GeoSite 支持，全面转向 rule_set 标准。",
+          "paragraphs": [
+            "在 sing-box 配置的 route.rule_set 数组中声明远程或本地 .srs 规则文件，随后在 route.rules 中通过 rule_set 标签引用即可。配合 download_detour 指定代理出站下载远程规则，可避免首次启动因直连拉取 GitHub Raw 超时而卡死。",
+            "如果你正在使用在线或自建订阅转换生成配置，记得开启新版 Rule-Set 转换模板并核验导出格式，操作细节见 <a href=\"/posts/subconverter-online-guide\">在线与自建订阅转换指南</a> 与 <a href=\"/posts/local-format-validator\">本地节点与配置格式检测工具</a>。"
+          ]
+        },
+        {
+          "id": "section-5",
+          "num": 5,
+          "title": "常见规则集失效与路由器爆内存排查",
+          "lead": "90% 的规则集报错集中在格式混用、镜像拉取超时以及 no-resolve 参数遗漏。",
+          "paragraphs": [
+            "若遇到规则加载报错“invalid magic”或“unsupported format”，九成是因为把 .srs 填进了 Mihomo，或者把 .mrs 填进了 sing-box。其次，所有 IP 类规则（如 geoip-cn）若无特殊需求务必附带 no-resolve（Mihomo 默认推荐），否则每次匹配到规则都会触发本地 DNS 阻塞解析。",
+            "针对路由器透明网关场景，低配硬路由务必清理废弃的大体积文本规则文件，仅保留核心 CN 直连与 AI/流媒体规则集，更多软路由内存与分流调优技巧请查阅 <a href=\"/posts/openwrt-passwall-homeproxy-guide\">软路由与全屋代理搭建指南</a>。"
+          ],
+          "table": {
+            "headers": ["故障报错特征", "底层原因定位", "快速修复方案"],
+            "rows": [
+              ["rule provider init failed / magic mismatch", "内核与规则二进制格式不匹配", "Mihomo 核对 format: mrs；sing-box 核对 format: binary (.srs)"],
+              ["首次启动卡在 Downloading rule-set", "规则托管在 GitHub，直连拉取超时", "配置 download_detour 走可用节点或更换国内可用 CDN 镜像源"],
+              ["国内网银或企业内网突然走代理打不开", "直连规则排名靠后或本地 Fake-IP 拦截", "将私有 IP、*.cn 与直连规则集置于 rule 顶部并补全 fake-ip-filter"]
+            ]
+          }
+        }
+      ],
+      "faq": [
+        {
+          "question": "Mihomo 的 .mrs 规则和 sing-box 的 .srs 规则可以互相转换或混用吗？",
+          "answer": "不能直接混用。两者采用的二进制序列化格式与前缀树头标识完全不同，Mihomo 强行读取 .srs 会直接启动失败。如需跨内核迁移，可通过 <a href=\"/posts/subconverter-online-guide\">在线与自建订阅转换指南</a> 中的模板重新映射对应内核的官方规则源。",
+          "relatedLink": { "text": "订阅转换防泄露指南", "href": "/posts/subconverter-online-guide" }
+        },
+        {
+          "question": "规则集更新频率设置成多久一次比较合理？",
+          "answer": "常规直连（geosite-cn / geoip-cn）与 AI 规则建议设置为每 86400 秒（24 小时）或 604800 秒（7 天）更新一次即可。过于频繁的每小时拉取不仅消耗无意义流量，还容易触发 GitHub 限流导致配置重载失败。",
+          "relatedLink": { "text": "全平台客户端入门通关", "href": "/posts/beginner-complete-guide" }
+        },
+        {
+          "question": "为什么切换成二进制规则集后，国内部分冷门网站还是走了代理？",
+          "answer": "精简版规则集通常只收录高频主流国内域名，冷门小众域名若未命中 geosite-cn 且规则末尾兜底为 PROXY（最终匹配），就会默认走代理。在规则列表最后配合 geoip-cn（非私有地址）做二次直连判定即可精准回落，详见 <a href=\"/posts/proxy-modes-comparison\">分流模式深度解析</a>。",
+          "relatedLink": { "text": "规则与全局模式对比", "href": "/posts/proxy-modes-comparison" }
+        },
+        {
+          "question": "在低内存 OpenWrt 路由器上跑规则集，有哪些必删冗余项？",
+          "answer": "建议删除全量广告拦截超大型规则集（动辄数十万条域名）以及非目标地区的冷门流媒体规则，仅保留“直连 CN + 常见海外服务 + ChatGPT/Claude”三组核心 .srs/.mrs 即可将内核运存压在 20MB 左右，参考 <a href=\"/posts/openwrt-passwall-homeproxy-guide\">软路由搭建指南</a>。",
+          "relatedLink": { "text": "OpenWrt 软路由搭建指南", "href": "/posts/openwrt-passwall-homeproxy-guide" }
+        },
+        {
+          "question": "如何快速检验自己编写或修改后的规则配置文件有没有语法错误？",
+          "answer": "切勿直接覆盖正在使用的主力配置。先将 YAML 或 JSON 粘贴到 <a href=\"/posts/local-format-validator\">本地节点与配置格式检测工具</a> 验证缩进与字段合法性，确认零语法报错后再导入客户端测试。",
+          "relatedLink": { "text": "本地配置格式校验工具", "href": "/posts/local-format-validator" }
+        }
+      ],
+      "relatedSlugs": [
+        "sing-box-overview-and-setup",
+        "subconverter-online-guide",
+        "proxy-modes-comparison"
+      ]
     }
   },
   "getFallback": true
